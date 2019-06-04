@@ -1,0 +1,82 @@
+/*전체 영역을 통틀어서 스타일 정리
+*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+	font-family: 'Nanum Gothic';
+}
+
+* {
+	text-decoration: none;
+}
+
+* havor {
+	color: #bbbbbb;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#bsLogo {
+	height: 35px
+}
+
+.jumbotron {
+	background-image: url('images/jumbotronBackground.jpg');
+	background-size: cover;
+}
+
+/* 내비게이션 영역 */
+.navbar-default { /*배경 색상*/
+	background-color: #000000;
+	border-color: #000000;
+}
+
+.navbar .navbar-nav {
+	display: inline-block;
+	float: none;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover,
+	.navbar-default .navbar-nav>.active>a:focus { /*현재 선택한 내비게이션 색상 이벤트*/
+	color: #bbbbbb;
+	background-color: black;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
+	{ /*내비게이션의 글자에 마우스를 올렸을 때*/
+	color: #bbbbbb;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
+	.navbar-default .navbar-nav>.open>a:focus { /*드랍다운이 열렸을 때 마우스 색상 이벤트*/
+	color: black;
+	background-color: white;
+	text-decoration: none;
+}
+.navbar-default .navbar-nav>li>a { /*내비게이션 기본 디자인*/
+	color: white;
+	font-size: medium;
+}
+
+/* Carousel base class */
+.carousel {
+  height: 500px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 500px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
