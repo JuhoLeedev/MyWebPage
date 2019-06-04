@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import user.UserDataDAO;
 
+
+
 /**
  * Servlet implementation class IdCheckServlet
  */
