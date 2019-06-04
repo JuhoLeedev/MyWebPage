@@ -21,7 +21,7 @@
 	<nav class="navbar navbar-default navbar-fixed-top top-nav" id="topNav">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html"><img id="bsLogo"
+				<a class="navbar-brand" href="index.jsp"><img id="bsLogo"
 					src="images/bslogo.png" alt="Logo" /></a>
 				<button type="button" class="navbar-toggle navbar-toggler-right"
 					data-toggle="collapse" data-target="#main-menu"

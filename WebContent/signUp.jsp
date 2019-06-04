@@ -94,7 +94,7 @@
 				<label for="inputId" class="col-lg-2 control-label">아이디</label>
 				<div class="col-lg-5">
 					<input type="text" class="form-control onlyAlphabetAndNumber"
-						id="id" data-rule-required="true"
+						id="id" data-rule-required="true" name="userId"
 						placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
 					<span id="idSpan" style="color: #999; display: none"></span>
 				</div>
@@ -107,7 +107,7 @@
 				<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
 				<div class="col-lg-5">
 					<input type="password" class="form-control" id="password"
-						name="excludeHangul" data-rule-required="true" placeholder="비밀번호"
+						name="userPw" data-rule-required="true" placeholder="비밀번호"
 						maxlength="30">
 				</div>
 			</div>
@@ -115,14 +115,14 @@
 				<label for="inputPasswordCheck" class="col-lg-2 control-label">비밀번호
 					확인</label>
 				<div class="col-lg-5">
-					<input type="password" class="form-control" id="passwordCheck"
+					<input type="password" class="form-control" id="passwordCheck" name="userPwCheck"
 						data-rule-required="true" placeholder="비밀번호 확인" maxlength="30">
 				</div>
 			</div>
 			<div class="form-group" id="divName">
 				<label for="inputName" class="col-lg-2 control-label">이름</label>
 				<div class="col-lg-5">
-					<input type="text" class="form-control onlyHangul" id="name"
+					<input type="text" class="form-control onlyHangul" id="name" name="userName"
 						data-rule-required="true" placeholder="한글만 입력 가능합니다."
 						maxlength="15">
 				</div>
@@ -131,7 +131,7 @@
 			<div class="form-group" id="divEmail">
 				<label for="inputEmail" class="col-lg-2 control-label">이메일</label>
 				<div class="col-lg-5">
-					<input type="email" class="form-control" id="email"
+					<input type="email" class="form-control" id="email" name="userEmail"
 						data-rule-required="true" placeholder="이메일" maxlength="40">
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰
 					번호</label>
 				<div class="col-lg-5">
-					<input type="tel" class="form-control onlyNumber" id="phoneNumber"
+					<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="userNumber"
 						data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요."
 						maxlength="11">
 				</div>
@@ -147,9 +147,9 @@
 			<div class="form-group" id="divAddress">
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">주소</label>
 				<div class="col-lg-5">
-					<input type="text" class="form-control" id="postcode"
+					<input type="text" class="form-control" id="postcode" name="userPostCode"
 						placeholder="우편번호"> <input type="text"
-						class="form-control" id="roadAddress" placeholder="도로명주소">
+						class="form-control" id="roadAddress" name="userRoadAddr" placeholder="도로명주소">
 					<span id="guide" style="color: #999; display: none"></span> <input
 						type="text" class="form-control" id="detailAddress"
 						placeholder="상세주소">
@@ -157,9 +157,9 @@
 				<div class="col-lg-5">
 					<button type="button" class="btn btn-default"
 						onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
-					<br> <input type="text" class="form-control" id="jibunAddress"
+					<br> <input type="text" class="form-control" id="jibunAddress" name="userJibunAddr"
 						placeholder="지번주소"> <input type="text"
-						class="form-control" id="extraAddress" placeholder="참고항목">
+						class="form-control" id="extraAddress" name="userExtraAddr" placeholder="참고항목">
 				</div>
 			</div>
 			<div class="form-group">
