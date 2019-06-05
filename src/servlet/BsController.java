@@ -76,7 +76,8 @@ public class BsController extends HttpServlet {
 			UserDataDAO userDataDao = new UserDataDAO();
 			int result = userDataDao.idDuplicate(userID);
 			response.getWriter().write(idDuplicateJSON(result));
-		} else if (com.equals("/signUp.do")) {
+		} 
+		else if (com.equals("/signUp.do")) {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
