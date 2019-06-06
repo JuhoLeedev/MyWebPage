@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.UserDataDAO;
+import user.UserDataVO;
 
 /**
  * Servlet implementation class IdCheckServlet
@@ -71,7 +72,7 @@ public class BsController extends HttpServlet {
 		if (com.equals("/idCheck.do")) {
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=UTF-8");
-			String userID = request.getParameter("userID");
+			String userID = request.getParameter("userId");
 			UserDataDAO userDataDao = new UserDataDAO();
 			int result = userDataDao.idDuplicate(userID);
 			if (result != -2)
@@ -82,6 +83,16 @@ public class BsController extends HttpServlet {
 		// 회원가입 컨트롤러
 		else if (com.equals("/signUp.do")) {
 			request.setCharacterEncoding("utf-8");
+			UserDataVO userData = new UserDataVO();
+			String uname = request.getParameter("userName");
+			String uemail = request.getParameter("userEmail");
+			int uphone = Integer.parseInt(request.getParameter("userPhone"));
+			userData.setUserID(request.getParameter("userId"));
+			userData.setUserPassword(request.getParameter("userPw"));
+			int uPostcode = Integer.parseInt(request.getParameter("userPostcode"));
+			String uRoadAddr = request.getParameter("userRoadAddr");
+			String uname = request.getParameter("userName");
+			
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
 			String name = request.getParameter("userName");

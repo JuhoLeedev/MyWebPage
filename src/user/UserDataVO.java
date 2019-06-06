@@ -2,7 +2,7 @@ package user;
 
 public class UserDataVO {
 	private String userID;
-	private String userPW;
+	private String userPassword;
 	private String userName;
 	private String userEmail;
 	private int userPhone;
@@ -34,11 +34,11 @@ public class UserDataVO {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-	public String getUserPW() {
-		return userPW;
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public void setUserPW(String userPW) {
-		this.userPW = userPW;
+	public void setUserPassword(String userPW) {
+		this.userPassword = userPW;
 	}
 	public String getUserName() {
 		return userName;

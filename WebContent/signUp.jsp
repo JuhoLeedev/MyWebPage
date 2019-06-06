@@ -139,7 +139,7 @@
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰
 					번호</label>
 				<div class="col-lg-5">
-					<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="userNumber"
+					<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="userPhone"
 						data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요."
 						maxlength="11">
 				</div>
@@ -147,7 +147,7 @@
 			<div class="form-group" id="divAddress">
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">주소</label>
 				<div class="col-lg-5">
-					<input type="text" class="form-control" id="postcode" name="userPostCode"
+					<input type="text" class="form-control" id="postcode" name="userPostcode"
 						placeholder="우편번호"> <input type="text"
 						class="form-control" id="roadAddress" name="userRoadAddr" placeholder="도로명주소">
 					<span id="guide" style="color: #999; display: none"></span> <input

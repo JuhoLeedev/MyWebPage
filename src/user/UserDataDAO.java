@@ -12,7 +12,7 @@ public class UserDataDAO {
 			SqlSession session = MySqlSession.getSession();
 			UserDataVO user = session.selectOne("UserData.search", userID);
 
-			if (user != null && user.getUserPW().equals(userPassword))
+			if (user != null && user.getUserPassword().equals(userPassword))
 				if (user.getAdmin() == '1')
 					return 2; // 관리자 계정
 				else
@@ -39,6 +39,10 @@ public class UserDataDAO {
 			e.printStackTrace();
 		}
 		return -2; // 데이터베이스 오류
+	}
+	
+	public void signup(UserDataVO u) {
+		
 	}
 
 }
