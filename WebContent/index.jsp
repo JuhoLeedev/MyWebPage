@@ -41,8 +41,7 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">접속하기<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li style="text-align: center; cursor: pointer;"><a
-								data-target="#signIn" data-toggle="modal">로그인</a></li>
+							<li style="text-align: center; cursor: pointer;"><a href="login.jsp">로그인</a></li>
 							<li style="text-align: center;"><a href="signUp.jsp">회원가입</a></li>
 						</ul></li>
 				</ul>
@@ -162,50 +161,7 @@
 		</div>
 	</footer>
 
-	<!--로그인 모달
-	================================  -->
-	<div class="row">
-		<div class="modal" id="signIn" tabindex="-1">
-			<div class="modal-dialog"
-				style="max-width: 100%; width: 400px; display: table;">
-				<div class="modal-content">
-					<div class="modal-header"
-						style="text-align: center; font-size: 20px">
-						로그인
-						<button class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-body" style="text-align: center;">
-						<div class="login-box well">
-							<div class="form-group">
-								<label for="username-email">이메일 or 아이디</label> <input
-									name="user_id" value='' id="username-email"
-									placeholder="E-mail or Username" type="text"
-									class="form-control" />
-							</div>
-							<div class="form-group">
-								<label for="password">비밀번호</label> <input name="password"
-									id="password" value='' placeholder="Password" type="password"
-									class="form-control" />
-							</div>
-							<div class="form-group">
-								<input type="submit"
-									class="btn btn-primary btn-login-submit btn-block m-t-md"
-									value="로그인" />
-							</div>
-							<span class='text-center'><a
-								href="/bbs/index.php?mid=index&act=dispMemberFindAccount"
-								class="text-sm">비밀번호 찾기</a></span>
-							<hr />
-							<div class="form-group">
-								<a href="signUp.jsp" class="btn btn-default btn-block m-t-md">
-									회원가입</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

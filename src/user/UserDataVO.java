@@ -6,7 +6,28 @@ public class UserDataVO {
 	private String userName;
 	private String userEmail;
 	private int userPhone;
+	private char emailReceiveYn;
+	private char smsReceiveYn;
+	private char admin;
 	
+	public char getEmailReceiveYn() {
+		return emailReceiveYn;
+	}
+	public void setEmailReceiveYn(char emailReceiveYn) {
+		this.emailReceiveYn = emailReceiveYn;
+	}
+	public char getSmsReceiveYn() {
+		return smsReceiveYn;
+	}
+	public void setSmsReceiveYn(char smsReceiveYn) {
+		this.smsReceiveYn = smsReceiveYn;
+	}
+	public char getAdmin() {
+		return admin;
+	}
+	public void setAdmin(char admin) {
+		this.admin = admin;
+	}
 	public String getUserID() {
 		return userID;
 	}

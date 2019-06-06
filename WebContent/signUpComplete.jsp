@@ -40,7 +40,7 @@ body {
 							height=100px></a>
 					</h1>
 
-					<br> <br> <br>
+					<br> <br>
 					<div class="jumbotron">
 						<br> <br> <br> <br> <br>
 						<h1 class="text-center">환영합니다!</h1>
@@ -56,10 +56,10 @@ body {
 							<strong><%=userID%></strong>입니다.
 						</p>
 						<br> <br> <br> <br>
-						
+						<% session.invalidate(); %> 
 						<p class="text-center">
 							<a class="btn btn-default btn-lg" href="index.jsp" role="button">홈으로</a>&nbsp;&nbsp;&nbsp;<a
-								class="btn btn-primary btn-lg" href="#" role="button">로그인</a>
+								class="btn btn-primary btn-lg" href="login.jsp" role="button">로그인</a>
 						</p>
 						<br> <br> <br> <br><hr>
 						<div class="footer">

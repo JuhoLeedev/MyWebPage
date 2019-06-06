@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import user.UserDataDAO;
 
-
-
 /**
  * Servlet implementation class IdCheckServlet
  */
@@ -69,27 +67,53 @@ public class BsController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String com = uri.substring(conPath.length());
 
+		// 아이디 중복 체크 컨트롤러
 		if (com.equals("/idCheck.do")) {
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=UTF-8");
 			String userID = request.getParameter("userID");
 			UserDataDAO userDataDao = new UserDataDAO();
 			int result = userDataDao.idDuplicate(userID);
-			response.getWriter().write(idDuplicateJSON(result));
-		} 
+			if (result != -2)
+				response.getWriter().write(idDuplicateJSON(result));
+			else
+				System.out.println("데이터베이스 오류!");
+		}
+		// 회원가입 컨트롤러
 		else if (com.equals("/signUp.do")) {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
 			String name = request.getParameter("userName");
-			
+
 			session.setAttribute("id", id);
 			session.setAttribute("name", name);
-			
-			response.sendRedirect("signUpComplete.jsp");
-		} else if (com.equals("/list.do")) {
 
-			viewPage = "list.jsp";
+			response.sendRedirect("signUpComplete.jsp");
+		}
+		// 로그인 컨트롤러
+		else if (com.equals("/login.do")) {
+			request.setCharacterEncoding("utf-8");
+			String id = request.getParameter("userId");
+			String pw = request.getParameter("userPassword");
+			UserDataDAO userdao = new UserDataDAO();
+			int result = userdao.login(id, pw);
+			HttpSession session = request.getSession();
+			if (result == 1) {
+				session.setAttribute("userID", id);
+				session.setAttribute("admin", 0);
+				response.sendRedirect("index.jsp");
+			} else if (result == 2) {
+				session.setAttribute("userID", id);
+				session.setAttribute("admin", 1);
+				response.sendRedirect("index.jsp");
+			} else if (result == 0) {
+				session.setAttribute("loginFailed", 1);
+				response.sendRedirect("login.jsp");
+			} else {
+				System.out.println("데이터베이스 오류!");
+			}
+
 		} else if (com.equals("/content_view.do")) {
 
 			viewPage = "content_view.jsp";

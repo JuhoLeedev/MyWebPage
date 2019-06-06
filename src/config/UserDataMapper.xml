@@ -13,6 +13,7 @@
 			select * from (select u.*, u.id as r from users u,classes c where u.clsid = c.id) as L where L.r <= #{num1} and L.r > #{num2}
 		]]>
 	</select> -->
+	
 	<select id="duplicate" parameterType="String" resultType="int">
 		<![CDATA[
 			SELECT count(*) 
@@ -21,9 +22,9 @@
 		]]>
 	</select>
 	
-	<select id="login" parameterType="String" resultType="int">
+	<select id="search" parameterType="String" resultType="user.UserDataVO">
 		<![CDATA[
-			SELECT count(*) 
+			SELECT *
 			  FROM user_data 
 			 WHERE userID = #{userID}
 		]]>
