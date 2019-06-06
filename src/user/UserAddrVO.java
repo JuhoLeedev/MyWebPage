@@ -6,7 +6,7 @@ public class UserAddrVO {
 	private String roadArress;
 	private String detailAddress;
 	private String extraAddress;
-	
+	private String jibunAddress;
 	
 	public String getUserID() {
 		return userID;
@@ -37,5 +37,11 @@ public class UserAddrVO {
 	}
 	public void setExtraAddress(String extraAddress) {
 		this.extraAddress = extraAddress;
+	}
+	public String getJibunAddress() {
+		return jibunAddress;
+	}
+	public void setJibunAddress(String jibunAddress) {
+		this.jibunAddress = jibunAddress;
 	}
 }

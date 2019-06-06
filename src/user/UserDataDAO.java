@@ -40,9 +40,16 @@ public class UserDataDAO {
 		}
 		return -2; // 데이터베이스 오류
 	}
-	
-	public void signup(UserDataVO u) {
-		
+
+	public void insert(UserDataVO user) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			int result = session.insert("UserData.add", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
 
 }

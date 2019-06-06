@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.UserAddrVO;
 import user.UserDataDAO;
 import user.UserDataVO;
 
@@ -83,15 +84,24 @@ public class BsController extends HttpServlet {
 		// 회원가입 컨트롤러
 		else if (com.equals("/signUp.do")) {
 			request.setCharacterEncoding("utf-8");
+			// userData 객체 생성
 			UserDataVO userData = new UserDataVO();
-			String uname = request.getParameter("userName");
-			String uemail = request.getParameter("userEmail");
-			int uphone = Integer.parseInt(request.getParameter("userPhone"));
 			userData.setUserID(request.getParameter("userId"));
 			userData.setUserPassword(request.getParameter("userPw"));
-			int uPostcode = Integer.parseInt(request.getParameter("userPostcode"));
-			String uRoadAddr = request.getParameter("userRoadAddr");
-			String uname = request.getParameter("userName");
+			userData.setUserName(request.getParameter("userName"));
+			userData.setUserEmail(request.getParameter("userEmail"));
+			userData.setUserPhone(Integer.parseInt(request.getParameter("userPhone")));
+			userData.setEmailReceiveYn(request.getParameter("emailReceiveYn").charAt(0));
+			userData.setSmsReceiveYn(request.getParameter("smsReceiveYn").charAt(0));
+			userData.setAdmin('0');
+			
+			// userAddr 객체 생성
+			UserAddrVO userAddr = new UserAddrVO();
+			userAddr.setUserID(request.getParameter("userId"));
+			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
+			userAddr.setRoadArress(request.getParameter("userRoadAddr"));
+			userAddr.setJibunAddress(request.getParameter("jibunAddress"));
+
 			
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
