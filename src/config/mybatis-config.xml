@@ -22,7 +22,7 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="config/UserDataMapper.xml" />
+		<mapper resource="config/UserMapper.xml" />
 	</mappers>
 
 </configuration>

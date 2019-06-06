@@ -3,7 +3,7 @@ package user;
 public class UserAddrVO {
 	private String userID;
 	private int postcode;
-	private String roadArress;
+	private String roadAddress;
 	private String detailAddress;
 	private String extraAddress;
 	private String jibunAddress;
@@ -20,11 +20,11 @@ public class UserAddrVO {
 	public void setPostcode(int postcode) {
 		this.postcode = postcode;
 	}
-	public String getRoadArress() {
-		return roadArress;
+	public String getRoadAddress() {
+		return roadAddress;
 	}
-	public void setRoadArress(String roadArress) {
-		this.roadArress = roadArress;
+	public void setRoadAddress(String roadAddress) {
+		this.roadAddress = roadAddress;
 	}
 	public String getDetailAddress() {
 		return detailAddress;

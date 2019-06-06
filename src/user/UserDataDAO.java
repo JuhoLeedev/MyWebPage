@@ -10,7 +10,7 @@ public class UserDataDAO {
 	public int login(String userID, String userPassword) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			UserDataVO user = session.selectOne("UserData.search", userID);
+			UserDataVO user = session.selectOne("User.search", userID);
 
 			if (user != null && user.getUserPassword().equals(userPassword))
 				if (user.getAdmin() == '1')
@@ -30,7 +30,12 @@ public class UserDataDAO {
 	public int idDuplicate(String userID) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			int result = (Integer) session.selectOne("UserData.duplicate", userID);
+			System.out.println(userID);
+			if(session ==null) {
+				System.out.println("세션이 널이다");
+			}
+			int result = (Integer) session.selectOne("User.duplicate", userID);
+			System.out.println("isDuplicate = " + result);
 			if (result >= 1)
 				return 1; // 중복
 			else
@@ -44,12 +49,14 @@ public class UserDataDAO {
 	public void insert(UserDataVO user) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			int result = session.insert("UserData.add", user);
+			
+			System.out.println(user.toString());
+			
+			int result = session.insert("User.addData", user);
+			session.commit();
+			//session.close();	//	세션닫기	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }

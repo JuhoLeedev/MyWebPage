@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.UserAddrDAO;
 import user.UserAddrVO;
 import user.UserDataDAO;
 import user.UserDataVO;
@@ -74,8 +75,12 @@ public class BsController extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=UTF-8");
 			String userID = request.getParameter("userId");
+			System.out.println(userID);
 			UserDataDAO userDataDao = new UserDataDAO();
 			int result = userDataDao.idDuplicate(userID);
+
+			System.out.println(result);
+
 			if (result != -2)
 				response.getWriter().write(idDuplicateJSON(result));
 			else
@@ -94,15 +99,21 @@ public class BsController extends HttpServlet {
 			userData.setEmailReceiveYn(request.getParameter("emailReceiveYn").charAt(0));
 			userData.setSmsReceiveYn(request.getParameter("smsReceiveYn").charAt(0));
 			userData.setAdmin('0');
-			
+
 			// userAddr 객체 생성
 			UserAddrVO userAddr = new UserAddrVO();
 			userAddr.setUserID(request.getParameter("userId"));
 			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
-			userAddr.setRoadArress(request.getParameter("userRoadAddr"));
-			userAddr.setJibunAddress(request.getParameter("jibunAddress"));
+			userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
+			userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
 
-			
+			// dao 객체 생성, 삽입
+			UserDataDAO udataDao = new UserDataDAO();
+			udataDao.insert(userData);
+
+			UserAddrDAO uaddrDao = new UserAddrDAO();
+			uaddrDao.insert(userAddr);
+
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
 			String name = request.getParameter("userName");

@@ -202,7 +202,7 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<script>
-			$(function() {
+	/* 		$(function() {
 				//모달을 전역변수로 선언
 				var modalContents = $(".modal-contents");
 				var modal = $("#defaultModal");
@@ -270,7 +270,7 @@
 					}
 				});
 
-				$('#name').keyup(function(event) {
+ 				$('#name').keyup(function(event) {
 
 					var divName = $('#divName');
 
@@ -281,7 +281,7 @@
 						divName.removeClass("has-error");
 						divName.addClass("has-success");
 					}
-				});
+				}); 
 
 				$('#email').keyup(function(event) {
 
@@ -502,7 +502,7 @@
 								});
 				 
 			});
-
+ */
 			function sample4_execDaumPostcode() {
 				new daum.Postcode(
 						{
@@ -579,7 +579,7 @@
 					idSpan.style.display = "block";
 				}
 				else{
-				xmlHttp.open("Post", "./idCheck.do?userID=" + encodeURIComponent(document.getElementById("id").value), true);
+				xmlHttp.open("Post", "./idCheck.do?userId=" + encodeURIComponent(document.getElementById("id").value), true);
 				xmlHttp.onreadystatechange = searchProcess;
 				xmlHttp.send(null);
 				}

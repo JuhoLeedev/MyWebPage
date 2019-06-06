@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +13,14 @@
 <script src="js/respond.js"></script>
 </head>
 <body>
+	<%
+		String userID = null;
+		int admin = -1;
+		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
+			userID = (String) session.getAttribute("userID");
+			admin = (Integer) session.getAttribute("admin");
+		}
+	%>
 	<nav class="navbar navbar-default" id="navbar">
 		<div class="container">
 			<div class="navbar-header">
@@ -34,17 +42,61 @@
 						<li><a href="#">PC견적</a></li>
 						<li><a href="#">커뮤니티</a></li>
 						<li><a href="#">고객지원</a></li>
+						<%
+							if (admin == 1) {
+						%>
+						<li><a href="#">배송관리</a></li>
+						<li><a href="#">회원관리</a></li>
+						<%
+							}
+						%>
 					</ul>
 				</div>
+				<%
+					if (userID == null) {
+				%>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">접속하기<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li style="text-align: center; cursor: pointer;"><a href="login.jsp">로그인</a></li>
+							<li style="text-align: center; cursor: pointer;"><a
+								href="login.jsp">로그인</a></li>
 							<li style="text-align: center;"><a href="signUp.jsp">회원가입</a></li>
 						</ul></li>
 				</ul>
+				<%
+					} else if (admin == 0) {
+				%>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"><strong><%=userID%> 님</strong> <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li style="text-align: center; cursor: pointer;"><a
+								href='javascript:void(0);' onclick="logout();"> 로그아웃</a></li>
+							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
+							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
+							<li style="text-align: center;"><a href="#">회원정보 수정</a></li>
+						</ul></li>
+				</ul>
+				<%
+					} else if (admin == 1) {
+				%>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"><strong>관리자</strong> 님 <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li style="text-align: center; cursor: pointer;"><a
+								href="login.jsp">로그아웃</a></li>
+						</ul></li>
+				</ul>
+				<%
+					}
+				%>
 			</div>
 		</div>
 	</nav>
@@ -168,5 +220,11 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function logout(){
+			<% session.invalidate(); %>
+			location.href="index.jsp";
+		}
+	</script>
 </body>
 </html>
