@@ -99,21 +99,24 @@ public class BsController extends HttpServlet {
 			userData.setEmailReceiveYn(request.getParameter("emailReceiveYn").charAt(0));
 			userData.setSmsReceiveYn(request.getParameter("smsReceiveYn").charAt(0));
 			userData.setAdmin('0');
-
+			// dataDao 객체 생성, 삽입
+			UserDataDAO udataDao = new UserDataDAO();
+			udataDao.insert(userData);
+			
 			// userAddr 객체 생성
+			if(request.getParameter("userPostcode") != null) {
 			UserAddrVO userAddr = new UserAddrVO();
 			userAddr.setUserID(request.getParameter("userId"));
 			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
 			userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
 			userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
-
-			// dao 객체 생성, 삽입
-			UserDataDAO udataDao = new UserDataDAO();
-			udataDao.insert(userData);
-
+			userAddr.setDetailAddress(request.getParameter("userDetailAddress"));
+			userAddr.setExtraAddress(request.getParameter("userExtraAddr"));
+			// addrDao 객체 생성, 삽입
 			UserAddrDAO uaddrDao = new UserAddrDAO();
 			uaddrDao.insert(userAddr);
-
+			}
+			
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
 			String name = request.getParameter("userName");

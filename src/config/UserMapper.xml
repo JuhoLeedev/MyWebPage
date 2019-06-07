@@ -17,11 +17,20 @@
 		]]>
 	</select>
 
-	<select id="search" parameterType="String"
+	<select id="searchData" parameterType="String"
 		resultType="user.UserDataVO">
 		<![CDATA[
 			SELECT *
 			  FROM user_data 
+			 WHERE userID = #{userID}
+		]]>
+	</select>
+
+	<select id="searchAddr" parameterType="String"
+		resultType="user.UserAddrVO">
+		<![CDATA[
+			SELECT *
+			  FROM user_addr 
 			 WHERE userID = #{userID}
 		]]>
 	</select>
@@ -33,7 +42,7 @@
 			VALUES (#{userID},#{userPassword},#{userName},#{userEmail},#{userPhone},#{emailReceiveYn},#{smsReceiveYn},#{admin})
 		]]>
 	</insert>
-	
+
 	<insert id="addAddr" parameterType="user.UserAddrVO">
 		<![CDATA[
 			INSERT

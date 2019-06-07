@@ -147,11 +147,11 @@
 			<div class="form-group" id="divAddress">
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">주소</label>
 				<div class="col-lg-5">
-					<input type="text" class="form-control" id="postcode" name="userPostcode"
+					<input type="text" class="form-control onlyNumber" id="postcode" name="userPostcode"
 						placeholder="우편번호"> <input type="text"
 						class="form-control" id="roadAddress" name="userRoadAddr" placeholder="도로명주소">
 					<span id="guide" style="color: #999; display: none"></span> <input
-						type="text" class="form-control" id="detailAddress"
+						type="text" class="form-control" id="detailAddress" name="userDetailAddress"
 						placeholder="상세주소">
 				</div>
 				<div class="col-lg-5">
@@ -202,7 +202,7 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<script>
-	/* 		$(function() {
+	 		$(function() {
 				//모달을 전역변수로 선언
 				var modalContents = $(".modal-contents");
 				var modal = $("#defaultModal");
@@ -309,16 +309,15 @@
 					}
 				});
 
-				$('#address').keyup(function(event) {
+				$('#postcode').keyup(function(event) {
 
-					var divPhoneNumber = $('#divAddress');
+					var divAddress = $('#divAddress');
 
-					if ($.trim($('#adrress').val()) == "") {
-						divPhoneNumber.removeClass("has-success");
-						divPhoneNumber.addClass("has-error");
+					if ($.trim($('#postcode').val()) == "") {
+						divAddress.removeClass("has-success");
 					} else {
-						divPhoneNumber.removeClass("has-error");
-						divPhoneNumber.addClass("has-success");
+						divAddress.removeClass("has-error");
+						divAddress.addClass("has-success");
 					}
 				});
 
@@ -485,24 +484,11 @@
 										divPhoneNumber.addClass("has-success");
 									}
 
-									//주소
-									if ($('#postcode').val() == "") {
-										modalContents.text("주소를 입력해주세요.");
-										modal.modal('show');
-
-										divAddress.removeClass("has-success");
-										divAddress.addClass("has-error");
-										$('#postcode').focus();
-										return false;
-									} else {
-										divAdrress.removeClass("has-error");
-										divAddress.addClass("has-success");
-									}
 
 								});
 				 
 			});
- */
+ 
 			function sample4_execDaumPostcode() {
 				new daum.Postcode(
 						{

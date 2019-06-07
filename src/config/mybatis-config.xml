@@ -16,7 +16,7 @@
 				<property name="url"
 					value="jdbc:mariadb://localhost:3306/bootsystemDB" />
 				<property name="username" value="root" />
-				<property name="password" value="1234" />
+				<property name="password" value="root" />
 			</dataSource>
 		</environment>
 	</environments>
