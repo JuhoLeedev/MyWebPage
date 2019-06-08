@@ -70,7 +70,9 @@ public class BsController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String com = uri.substring(conPath.length());
 
-		// 아이디 중복 체크 컨트롤러
+		/**
+		 * 아이디 중복 체크 컨트롤러
+		 */
 		if (com.equals("/idCheck.do")) {
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=UTF-8");
@@ -86,7 +88,9 @@ public class BsController extends HttpServlet {
 			else
 				System.out.println("데이터베이스 오류!");
 		}
-		// 회원가입 컨트롤러
+		/**
+		 * 회원가입 컨트롤러
+		 */
 		else if (com.equals("/signUp.do")) {
 			request.setCharacterEncoding("utf-8");
 			// userData 객체 생성
@@ -102,21 +106,21 @@ public class BsController extends HttpServlet {
 			// dataDao 객체 생성, 삽입
 			UserDataDAO udataDao = new UserDataDAO();
 			udataDao.insert(userData);
-			
+
 			// userAddr 객체 생성
-			if(request.getParameter("userPostcode") != null) {
-			UserAddrVO userAddr = new UserAddrVO();
-			userAddr.setUserID(request.getParameter("userId"));
-			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
-			userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
-			userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
-			userAddr.setDetailAddress(request.getParameter("userDetailAddress"));
-			userAddr.setExtraAddress(request.getParameter("userExtraAddr"));
-			// addrDao 객체 생성, 삽입
-			UserAddrDAO uaddrDao = new UserAddrDAO();
-			uaddrDao.insert(userAddr);
+			if (request.getParameter("userPostcode") != "") {
+				UserAddrVO userAddr = new UserAddrVO();
+				userAddr.setUserID(request.getParameter("userId"));
+				userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
+				userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
+				userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
+				userAddr.setDetailAddress(request.getParameter("userDetailAddress"));
+				userAddr.setExtraAddress(request.getParameter("userExtraAddr"));
+				// addrDao 객체 생성, 삽입
+				UserAddrDAO uaddrDao = new UserAddrDAO();
+				uaddrDao.insert(userAddr);
 			}
-			
+
 			HttpSession session = request.getSession();
 			String id = request.getParameter("userId");
 			String name = request.getParameter("userName");
@@ -126,7 +130,9 @@ public class BsController extends HttpServlet {
 
 			response.sendRedirect("signUpComplete.jsp");
 		}
-		// 로그인 컨트롤러
+		/**
+		 * 로그인 컨트롤러
+		 */
 		else if (com.equals("/login.do")) {
 			request.setCharacterEncoding("utf-8");
 			String id = request.getParameter("userId");
@@ -134,6 +140,7 @@ public class BsController extends HttpServlet {
 			UserDataDAO userdao = new UserDataDAO();
 			int result = userdao.login(id, pw);
 			HttpSession session = request.getSession();
+			
 			if (result == 1) {
 				session.setAttribute("userID", id);
 				session.setAttribute("admin", 0);
@@ -149,9 +156,14 @@ public class BsController extends HttpServlet {
 				System.out.println("데이터베이스 오류!");
 			}
 
-		} else if (com.equals("/content_view.do")) {
-
-			viewPage = "content_view.jsp";
+		}
+		/**
+		 * 로그아웃 컨트롤러
+		 */
+		else if (com.equals("/logout.do")) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			response.sendRedirect("index.jsp");
 		} else if (com.equals("/modify.do")) {
 
 			viewPage = "list.do";

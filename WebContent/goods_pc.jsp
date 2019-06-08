@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +77,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href='javascript:void(0);' onclick="logout();"> 로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
 							<li style="text-align: center;"><a href="#">회원정보 수정</a></li>
@@ -93,7 +93,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href='javascript:void(0);' onclick="logout();"> 로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -172,11 +172,5 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-		function logout() {
-	<%session.invalidate();%>
-		location.href = "index.jsp";
-		}
-	</script>
 </body>
 </html>

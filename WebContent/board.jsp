@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,7 @@
 			<div class="navbar-collapse collapse" id="main-menu">
 				<div class="btn-group top-btn" role="group">
 					<ul class="nav navbar-nav">
-						<li><a href="goods_main.jsp">조립PC</a></li>
+						<li><a href="goods_pc.jsp">조립PC</a></li>
 						<li><a href="#">부품</a></li>
 						<li><a href="#">PC견적</a></li>
 						<li><a href="board.jsp">커뮤니티</a></li>
@@ -75,7 +75,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href='javascript:void(0);' onclick="logout();"> 로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
 							<li style="text-align: center;"><a href="#">회원정보 수정</a></li>
@@ -91,7 +91,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href='javascript:void(0);' onclick="logout();"> 로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -101,6 +101,23 @@
 		</div>
 	</nav>
 
+	<div class="container">
+		<table class="table table-striped"
+			style="text-align: center; border: 1px solid #dddddd;">
+			<thead>
+				<tr>
+					<th style="background-color: #eeeeee; text-align: center;">번호</th>
+					<th style="background-color: #eeeeee; text-align: center;">제목</th>
+					<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+					<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+					<th style="background-color: #eeeeee; text-align: center;">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+	</div>
 	<!--푸터
 	=============================  -->
 	<footer style="background-color: white; color: #bbbbbb">
@@ -133,11 +150,5 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-		function logout(){
-			<% session.invalidate(); %>
-			location.href="index.jsp";
-		}
-	</script>
 </body>
 </html>

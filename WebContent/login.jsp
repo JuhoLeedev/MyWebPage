@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,7 +137,7 @@ body {
 					$('#password').focus();
 					return false;
 				} else if ($('#password').val() != "") {
-	<%session.invalidate();%>
+	<%session.removeAttribute("loginFailed");%>
 		$('#idSpan').html("");
 					$('#idSpan').css("display", "none");
 				}
