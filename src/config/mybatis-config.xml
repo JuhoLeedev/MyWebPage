@@ -23,6 +23,7 @@
 
 	<mappers>
 		<mapper resource="config/UserMapper.xml" />
+		<mapper resource="config/GoodsMapper.xml"/>
 	</mappers>
 
 </configuration>

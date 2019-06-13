@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="true"%>
+	<%@ page import="java.io.PrintWriter" %>
+<%@page import="goods.GoodsDAO"%>
+<%@page import="goods.GoodsVO"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,25 +121,32 @@
 				<div class="MenuTitle">
 					<span>Goods List</span>
 					</div></div>
+					<%
+						GoodsDAO goodsDao = new GoodsDAO();
+						List<GoodsVO> goodsList = goodsDao.listAll();
+						System.out.println(goodsList.size());
+						for(int i=0; i<goodsList.size(); i++){
+					%>
 					<div class="col-xs-6 col-sm-6 col-md-3">
 						<div class="main_goods_box" style="height: 630px;">
 							<div class="goods_img text-center"
-								style="background-image: url('images/pc1.png');"></div>
+								style="background-image: url('<%= goodsList.get(i).getImageSrc() %>');"></div>
 							<div class="goods_footer text-center">
 								<div class="text-center">
 									<ul class="list-unstyled">
-										<li><text class="goods_name">야야 PC</text></li>
-										<li><text class="goods_info">i7-9700k + RTX 2070</text></li>
+										<li><text class="goods_name"><%= goodsList.get(i).getName() %></text></li>
+										<li><text class="goods_info"><%= goodsList.get(i).getInfo() %></text></li>
 									</ul>
 								</div>
 								<div class="text-center">
 									<p>
-										<text class="goods_pay">판매가: 1,870,000원</text>
+										<text class="goods_pay">판매가: <%= goodsList.get(i).getPrice() %>원</text>
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
+					<%} %>
 
 		</div>
 	</div>

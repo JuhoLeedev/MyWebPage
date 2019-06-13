@@ -12,7 +12,6 @@ public class UserAddrDAO {
 			int result = session.insert("User.addAddr", user);
 			
 			session.commit();
-			session.close();	//	세션닫기	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

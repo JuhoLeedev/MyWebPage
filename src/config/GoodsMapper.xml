@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="Goods">
+
+	<select id="searchOne" parameterType="int"
+		resultType="goods.GoodsVO">
+		<![CDATA[
+			SELECT *
+			  FROM product_pc 
+			 WHERE code = #{code}
+		]]>
+	</select>
+
+	<select id="searchAll" resultType="goods.GoodsVO">
+		<![CDATA[
+			SELECT *
+			  FROM product_pc 
+		]]>
+	</select>
+
+	<insert id="add" parameterType="goods.GoodsVO">
+		<![CDATA[
+			INSERT
+			  INTO product_pc (code, name, info, price, imageSrc, cpu, vga, ram, ssd, motherboard, power)
+			VALUES (#{code},#{name},#{info},#{price},#{imageSrc},#{cpu},#{vga},#{ram},#{ssd},#{motherboard},#{power})
+		]]>
+	</insert>
+</mapper>

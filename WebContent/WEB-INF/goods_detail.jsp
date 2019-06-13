@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,23 +10,8 @@
 <title>부트시스템</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
+<link rel="stylesheet" href="css/goods.css">
 <script src="js/respond.js"></script>
-<style type="text/css">
-a:link {
-	color: black;
-	text-decoration: none;
-}
-
-a:visited {
-	color: black;
-	text-decoration: none;
-}
-
-a:hover {
-	color: black;
-	text-decoration: none;
-}
-</style>
 
 </head>
 <body>
@@ -118,43 +103,8 @@ a:hover {
 		</div>
 	</nav>
 
-<!--점보트론==============  -->
-	<div class="container-fluid">
-		<div class="jumbotron">
-			<h1 class="text-center">커뮤니티</h1>
-		</div>
-	</div>
-	
-	<div class="container">
-		<table class="table table-striped"
-			style="text-align: center; border: 1px solid #dddddd;">
-			<thead>
-				<tr>
-					<th class="col-sm-1 col-md-1 text-center"
-						style="background-color: #eeeeee;">번호</th>
-					<th class="col-sm-6 col-md-6 text-center"
-						style="background-color: #eeeeee;">제목</th>
-					<th class="col-sm-2 col-md-2 text-center"
-						style="background-color: #eeeeee;">작성자</th>
-					<th class="col-sm-2 col-md-2 text-center"
-						style="background-color: #eeeeee;">작성일</th>
-					<th class="col-sm-1 col-md-1 text-center"
-						style="background-color: #eeeeee;">조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="text-center">1</td>
-					<td class="text-left"><a href="#">
-							<div style="width: 100%">안녕하세요</div>
-					</a></td>
-					<td class="text-center">홍길동</td>
-					<td class="text-center">2019.06.09 23:12</td>
-					<td class="text-center">10</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+
+
 	<!--푸터
 	=============================  -->
 	<footer style="background-color: white; color: #bbbbbb">

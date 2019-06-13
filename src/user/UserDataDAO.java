@@ -47,8 +47,7 @@ public class UserDataDAO {
 		try {
 			SqlSession session = MySqlSession.getSession();
 			int result = session.insert("User.addData", user);
-			session.commit();
-			//session.close();	//	세션닫기	
+			session.commit();	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
