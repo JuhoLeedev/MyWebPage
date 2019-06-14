@@ -38,6 +38,7 @@ p {
 </style>
 </head>
 <body>
+
 	<%
 		String userID = null;
 		int admin = -1;
@@ -62,6 +63,7 @@ p {
 	<%
 		}
 	%>
+
 	<nav class="navbar navbar-default" id="navbar">
 		<div class="container">
 			<div class="navbar-header">
@@ -115,8 +117,8 @@ p {
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
 								href="logout.do"> 로그아웃</a></li>
-							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
-							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
+							<li style="text-align: center;"><a href="myCart.jsp">내 장바구니</a></li>
+							<li style="text-align: center;"><a href="myPurchase.jsp">내 구매 목록</a></li>
 							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보
 									수정</a></li>
 						</ul></li>
@@ -180,15 +182,31 @@ p {
 					원
 				</p>
 
+					<%if(userID == null){ %>
 				<p>
-					<button class="btn btn-block btn-success btn-lg checkout"
-						onclick="buyGoods()">바로구매</button>
+					<a href="login.jsp"><button class="btn btn-block btn-success btn-lg checkout"
+						>바로구매</button></a>
 				</p>
 
 				<p>
-					<button class="btn btn-block btn-success btn-lg btn-cart"
-						type="button" onclick="cartGoods()">장바구니</button>
+					<a href="login.jsp"><button class="btn btn-block btn-success btn-lg btn-cart"
+						type="button">장바구니</button></a>
 				</p>
+				<%}else if(admin == 1) {%>
+				<p>
+					<a href="deleteGoods.do"><button class="btn btn-block btn-danger btn-lg delete"
+						>물품 삭제</button></a>
+				</p>
+				<%}else{ %>
+				<p>
+					<a href="purchase.do?code=<%=goodsVo.getCode() %>"><button class="btn btn-block btn-success btn-lg checkout"
+						type="button" >바로구매</button></a>
+				</p>
+				<p>
+					<a href="addToCart.do?code=<%=goodsVo.getCode()%>"><button class="btn btn-block btn-success btn-lg cart"
+						>장바구니</button></a>
+				</p>
+				<%} %>
 			</div>
 		</div>
 	</div>
@@ -226,43 +244,6 @@ p {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-		var code=<%=code%>;
-		var userID =<%=userID%>;
-		
-		function buyGoods(){
-			if(userID == null){
-				window.location.href = "login.jsp";
-			}
-			else if(confirm("정말로 구매하시겠습니까?")){
-				window.location.href = "buygoods.do?code="+code;
-			}
-		}
-		
-		var xmlHttp = new XMLHttpRequest();
-	
-		function cartGoods(){
-			if(userID == null){
-				window.location.href = "login.jsp";
-			}
-			else {
-			xmlHttp.open("Post", "./cartgoods.do?code=" + encodeURIComponent("code", true);
-			xmlHttp.onreadystatechange = searchProcess;
-			xmlHttp.send(null);
-			}
-		}
-		function searchProcess(){
-			if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				var object = eval('(' + xmlHttp.responseText + ')');
-				var result = object.result;
-				if (result == 1){
-					alert("장바구니에 추가되었습니다.");
-				}
-				else{
-					alert("오류가 발생했습니다. 다시 시도해주세요.");
-				}
-			}
-		}
-	</script>
+
 </body>
 </html>

@@ -32,7 +32,7 @@ public class CartDAO {
 	public void remove(int cartcode) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			session.delete("purchase.deleteBuy", cartcode);
+			session.delete("purchase.deleteCart", cartcode);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

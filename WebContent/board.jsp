@@ -104,8 +104,8 @@ a:hover {
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
 								href="logout.do"> 로그아웃</a></li>
-							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
-							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
+							<li style="text-align: center;"><a href="myCart.jsp">내 장바구니</a></li>
+							<li style="text-align: center;"><a href="myPurchase.jsp">내 구매 목록</a></li>
 							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
 						</ul></li>
 				</ul>

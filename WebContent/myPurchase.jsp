@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="board.BoardDAO"%>
-<%@page import="board.BoardVO"%>
+<%@page import="purchase.BuyDAO"%>
+<%@page import="purchase.BuyVO"%>
+<%@page import="goods.GoodsDAO"%>
+<%@page import="goods.GoodsVO"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -27,13 +29,13 @@ a:visited {
 }
 
 a:hover {
-	color: black;
+	color: #2E2E2E;
 	text-decoration: none;
 }
 
-.jumbotron{
+.jumbotron {
 	background-color: #424242;
-	color:white;
+	color: white;
 }
 </style>
 
@@ -46,17 +48,7 @@ a:hover {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
 		}
-		int bcode = 0;
-		if (request.getParameter("bcode") != null) {
-			bcode = Integer.parseInt(request.getParameter("bcode"));
-		}
-		BoardVO boardVo = null;
-		if (bcode != 0) {
-			BoardDAO boardDao = new BoardDAO();
-			boardVo = boardDao.searchBoard(bcode);
-		}
 	%>
-
 	<nav class="navbar navbar-default" id="navbar">
 		<div class="container">
 			<div class="navbar-header">
@@ -112,7 +104,8 @@ a:hover {
 								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="myCart.jsp">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="myPurchase.jsp">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보
+									수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -138,56 +131,54 @@ a:hover {
 	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
-			<h1 class="text-center">커뮤니티</h1>
+			<h1 class="text-center">구매내역</h1>
 		</div>
 	</div>
 
 	<div class="container">
-		<div class="row">
-			<form method="post" action="boardWrite.do">
-				<table class="table table-striped"
-					style="text-align: center; border: 1px solid #dddddd">
-					<thead>
-						<tr>
-							<th colspan="2"
-								style="background-color: #eeeeee; text-algin: left">게시판 글쓰기</th>
-						</tr>
-					</thead>
-					<tbody>
-						<%
-							if (bcode != 0) {
-						%>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="제목을 적어주세요." id="boardTitle" name="bTitle"
-								maxlength="50" value=<%=boardVo.getTitle()%>></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" placeholder="내용을 적어주세요."
-									id="boardContent" name="bContent" maxlength="2048"
-									style="height: 350px"><%=boardVo.getBwrite()%></textarea></td>
-						</tr>
-						<%
-							} else {
-						%>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="제목을 적어주세요." id="boardTitle" name="bTitle"
-								maxlength="50"></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" placeholder="내용을 적어주세요."
-									id="boardContent" name="bContent" maxlength="2048"
-									style="height: 350px"></textarea></td>
-						</tr>
-						<%
-							}
-						%>
-					</tbody>
-				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="작성완료">
-			</form>
-		</div>
+		<table class="table table-striped"
+			style="text-align: center; border: 1px solid #dddddd;">
+			<thead>
+				<tr>
+					<th class="col-sm-1 col-md-1 text-center"
+						style="background-color: #eeeeee;">주문번호</th>
+					<th class="col-sm-6 col-md-6 text-center"
+						style="background-color: #eeeeee;">상품명</th>
+					<th class="col-sm-2 col-md-2 text-center"
+						style="background-color: #eeeeee;">주문하신분</th>
+					<th class="col-sm-2 col-md-2 text-center"
+						style="background-color: #eeeeee;">결재일</th>
+					<th class="col-sm-1 col-md-1 text-center"
+						style="background-color: #eeeeee;">주문취소</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+					BuyDAO buyDao = new BuyDAO();
+					GoodsDAO goodsDao = new GoodsDAO();
+					GoodsVO goodsVo;
+					List<BuyVO> buyList = buyDao.search(userID);
+					for (int i = 0; i < buyList.size(); i++) {
+						int pcode = buyList.get(i).getPcode();
+						goodsVo = goodsDao.search(pcode);
+				%>
+				<tr>
+					<td class="text-center"><%=buyList.get(i).getBuycode()%></td>
+					<td class="text-left">
+						<div style="width: 100%"><%=goodsVo.getName()%></div> </a>
+					</td>
+					<td class="text-center"><%=buyList.get(i).getUserID()%></td>
+					<td class="text-center"><%=buyList.get(i).getDate()%></td>
+					<td class="text-center"><a
+						href="purchaseCancel.do?code=<%=buyList.get(i).getBuycode()%>"
+						onclick="return cancelChk()"><button
+								class="btn btn-danger btn-sm">주문취소</button></a></td>
+				</tr>
+				<%
+					}
+				%>
+			</tbody>
+		</table>
 	</div>
 
 	<!--푸터
@@ -215,26 +206,7 @@ a:hover {
 		</div>
 	</footer>
 
-	<!--모달창==========  -->
-	<div class="modal fade" id="defaultModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">×</button>
-					<h4 class="modal-title">알림</h4>
-				</div>
-				<div class="modal-body">
-					<p class="modal-contents"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+
 
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -242,41 +214,9 @@ a:hover {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script>
-		$(function() {
-			var modalContents = $(".modal-contents");
-			var modal = $("#defaultModal");
-
-			$("form").submit(function(event) {
-
-				var bTitle = $('#boardTitle');
-				var bContent = $('#boardContent');
-
-				//글 제목
-				if ($('#boardTitle').val() == "") {
-					modalContents.text("제목을 적어주세요."); //모달 메시지 입력
-					modal.modal('show'); //모달 띄우기
-
-					bTitle.addClass("has-error");
-					$('#boardTitle').focus();
-					return false;
-				} else {
-					bTitle.removeClass("has-error");
-				}
-
-				//글 내용
-				if ($('#boardContent').val() == "") {
-					modalContents.text("내용을 적어주세요.");
-					modal.modal('show');
-
-					bContent.addClass("has-error");
-					$('#boardContent').focus();
-					return false;
-				} else {
-					bContent.removeClass("has-error");
-				}
-
-			});
-		});
+		function cancelChk() {
+			return confirm("정말로 주문을 취소하시겠습니까?");
+		}
 	</script>
 </body>
 </html>

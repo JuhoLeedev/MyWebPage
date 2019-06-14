@@ -17,10 +17,10 @@ public class BuyDAO {
 		}
 	}
 	
-	public List<BuyDAO> search(String userID) {
+	public List<BuyVO> search(String userID) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			List<BuyDAO> list = session.selectList("purchase.searchBuy",userID);
+			List<BuyVO> list = session.selectList("purchase.searchBuy",userID);
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

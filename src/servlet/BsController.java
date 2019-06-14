@@ -116,19 +116,6 @@ public class BsController extends HttpServlet {
 			udataDao.insert(userData);
 
 			// userAddr 객체 생성
-<<<<<<< HEAD
-			if(request.getParameter("userPostcode") != "") {
-			UserAddrVO userAddr = new UserAddrVO();
-			userAddr.setUserID(request.getParameter("userId"));
-			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
-			userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
-			userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
-			userAddr.setDetailAddress(request.getParameter("userDetailAddress"));
-			userAddr.setExtraAddress(request.getParameter("userExtraAddr"));
-			// addrDao 객체 생성, 삽입
-			UserAddrDAO uaddrDao = new UserAddrDAO();
-			uaddrDao.insert(userAddr);
-=======
 			if (request.getParameter("userPostcode") != "") {
 				UserAddrVO userAddr = new UserAddrVO();
 				userAddr.setUserID(request.getParameter("userId"));
@@ -140,7 +127,18 @@ public class BsController extends HttpServlet {
 				// addrDao 객체 생성, 삽입
 				UserAddrDAO uaddrDao = new UserAddrDAO();
 				uaddrDao.insert(userAddr);
->>>>>>> branch 'master' of https://github.com/JuhoLeedev/MyWebPage.git
+			}
+			if (request.getParameter("userPostcode") != "") {
+				UserAddrVO userAddr = new UserAddrVO();
+				userAddr.setUserID(request.getParameter("userId"));
+				userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
+				userAddr.setRoadAddress(request.getParameter("userRoadAddr"));
+				userAddr.setJibunAddress(request.getParameter("userJibunAddr"));
+				userAddr.setDetailAddress(request.getParameter("userDetailAddress"));
+				userAddr.setExtraAddress(request.getParameter("userExtraAddr"));
+				// addrDao 객체 생성, 삽입
+				UserAddrDAO uaddrDao = new UserAddrDAO();
+				uaddrDao.insert(userAddr);
 			}
 
 			HttpSession session = request.getSession();
@@ -230,7 +228,7 @@ public class BsController extends HttpServlet {
 				dao.update(vo);
 			}
 			response.sendRedirect("board.jsp");
-		} 
+		}
 		/**
 		 * 회원정보 수정 컨트롤러
 		 */
@@ -288,11 +286,13 @@ public class BsController extends HttpServlet {
 				uaddrDao3.insert(userAddr);
 			}
 
-
 			response.sendRedirect("index.jsp");
-			
-		}
-		else if (com.equals("/buygoods.do")) {
+
+		} 
+		/**
+		 * 구매하기
+		 */
+		else if (com.equals("/purchase.do")) {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			String userID = (String) session.getAttribute("userID");
@@ -303,9 +303,12 @@ public class BsController extends HttpServlet {
 			buyVo.setUserID(userID);
 			BuyDAO buyDao = new BuyDAO();
 			buyDao.insert(buyVo);
+			response.sendRedirect("purchaseComplete.jsp");
 		}
-		
-		else if (com.equals("/cartgoods.do")) {
+		/**
+		 * 장바구니 담기
+		 */
+		else if (com.equals("/addToCart.do")) {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			String userID = (String) session.getAttribute("userID");
@@ -316,6 +319,7 @@ public class BsController extends HttpServlet {
 			cartVo.setUserID(userID);
 			CartDAO cartDao = new CartDAO();
 			cartDao.insert(cartVo);
+			response.sendRedirect("goods_pc.jsp");
 		}
 		/**
 		 * 회원탈퇴
@@ -327,22 +331,35 @@ public class BsController extends HttpServlet {
 			dataDao.remove(userID);
 			UserAddrDAO addrDao = new UserAddrDAO();
 			addrDao.removeAll(userID);
-			
+
 			response.sendRedirect("userOut.jsp");
-		}
-		else if (com.equals("/reply.do")) {
+		} 
+		/**
+		 * 주문 취소
+		 */
+		else if (com.equals("/purchaseCancel.do")) {
+			request.setCharacterEncoding("utf-8");
+			int buycode = Integer.parseInt(request.getParameter("code"));
+			BuyDAO buyDao = new BuyDAO();
+			buyDao.remove(buycode);
+			
 
-			viewPage = "list.do";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request, response);
-		}
-		else if (com.equals("/reply.do")) {
+			response.sendRedirect("myPurchase.jsp");
+			
+		} 
+		/**
+		 * 장바구니 비우기
+		 */
+		else if (com.equals("/cartDelete.do")) {
+			request.setCharacterEncoding("utf-8");
+			int cartcode = Integer.parseInt(request.getParameter("code"));
+			System.out.println(cartcode);
+			CartDAO cartDao = new CartDAO();
+			cartDao.remove(cartcode);
+			
 
-			viewPage = "list.do";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request, response);
+			response.sendRedirect("myCart.jsp");
 		}
-		
 
 	}
 
