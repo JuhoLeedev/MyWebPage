@@ -12,7 +12,24 @@
 <link rel="stylesheet" href="css/bootSystem.css">
 <link rel="stylesheet" href="css/goods.css">
 <script src="js/respond.js"></script>
+<style type="text/css">
+a:link {
+	text-decoration: none;
+}
 
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.jumbotron{
+	background-color: #424242;
+	color:white;
+}
+</style>
 </head>
 <body>
 	<%
@@ -39,9 +56,7 @@
 			<div class="navbar-collapse collapse" id="main-menu">
 				<div class="btn-group top-btn" role="group">
 					<ul class="nav navbar-nav">
-						<li><a href="goods_pc.jsp">조립PC</a></li>
-						<li><a href="#">부품</a></li>
-						<li><a href="#">PC견적</a></li>
+					<li><a href="goods_pc.jsp">PC상품</a></li>
 						<li><a href="board.jsp">커뮤니티</a></li>
 						<li><a href="#">고객지원</a></li>
 						<%
@@ -80,7 +95,7 @@
 								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="#">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -102,7 +117,15 @@
 			</div>
 		</div>
 	</nav>
-
+	<!--점보트론==============  -->
+	<div class="container-fluid">
+		<div class="jumbotron">
+			<h1 class="text-center">PC 상품</h1>
+			<p class="text-center"></p>
+		</div>
+	</div>
+	
+	
 
 
 	<!--푸터

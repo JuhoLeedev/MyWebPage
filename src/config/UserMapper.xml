@@ -26,12 +26,26 @@
 		]]>
 	</select>
 
+	<select id="searchDataAll" resultType="goods.GoodsVO">
+		<![CDATA[
+			SELECT *
+			  FROM user_data 
+		]]>
+	</select>
+
 	<select id="searchAddr" parameterType="String"
 		resultType="user.UserAddrVO">
 		<![CDATA[
 			SELECT *
 			  FROM user_addr 
 			 WHERE userID = #{userID}
+		]]>
+	</select>
+
+	<select id="searchAddrAll" resultType="goods.GoodsVO">
+		<![CDATA[
+			SELECT *
+			  FROM user_addr 
 		]]>
 	</select>
 
@@ -51,5 +65,12 @@
 		]]>
 	</insert>
 
+	<update id="dataUpdate" parameterType="user.UserDataVO">
+		<![CDATA[
+			UPDATE user_data
+			   SET userPassword = #{userPassword}, userEmail = #{userEmail}, userPhone = #{userPhone}, emailReceiveYn = #{emailReceiveYn}, smsReceiveYn = #{smsReceiveYn}
+			 WHERE userID = #{userID}
+		]]>
+	</update>
 
 </mapper>

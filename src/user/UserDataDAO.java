@@ -52,4 +52,25 @@ public class UserDataDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public UserDataVO search(String userID) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			UserDataVO vo = session.selectOne("User.searchData",userID);
+			return vo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; // 데이터베이스 오류
+	}
+	
+	public void update(UserDataVO vo) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			session.update("User.dataUpdate",vo);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

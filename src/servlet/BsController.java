@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.BoardDAO;
+import board.BoardVO;
 import user.UserAddrDAO;
 import user.UserAddrVO;
 import user.UserDataDAO;
@@ -140,7 +142,7 @@ public class BsController extends HttpServlet {
 			UserDataDAO userdao = new UserDataDAO();
 			int result = userdao.login(id, pw);
 			HttpSession session = request.getSession();
-			
+
 			if (result == 1) {
 				session.setAttribute("userID", id);
 				session.setAttribute("admin", 0);
@@ -164,21 +166,137 @@ public class BsController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("index.jsp");
-		} else if (com.equals("/modify.do")) {
+		}
+		/**
+		 * 게시글 삭제 컨트롤러
+		 */
+		else if (com.equals("/deleteBoard.do")) {
+			request.setCharacterEncoding("utf-8");
+			int bcode = Integer.parseInt(request.getParameter("bcode"));
+			BoardDAO boardDao = new BoardDAO();
+			boardDao.remove(bcode);
+			response.sendRedirect("board.jsp");
+		}
+		/**
+		 * 게시글 클릭 이벤트
+		 */
+		else if (com.equals("/hits.do")) {
+			request.setCharacterEncoding("utf-8");
+			int bcode = Integer.parseInt(request.getParameter("bcode"));
+			BoardDAO boardDao = new BoardDAO();
+			boardDao.hitsUpdate(bcode);
+			response.sendRedirect("board_detail.jsp?bcode=" + bcode);
+		}
+		/**
+		 * 게시글 작성 컨트롤러
+		 */
+		else if (com.equals("/boardWrite.do")) {
+			request.setCharacterEncoding("utf-8");
+			BoardDAO dao = new BoardDAO();
+			HttpSession session = request.getSession();
+			if (request.getParameter("bcode") == null) {
+				BoardVO vo = new BoardVO();
+				vo.setUserID((String) session.getAttribute("userID"));
+				vo.setTitle(request.getParameter("bTitle"));
+				vo.setBwrite(request.getParameter("bContent"));
+				vo.setHits(0);
+				vo.setScode(0);
 
-			viewPage = "list.do";
-		} else if (com.equals("/delete.do")) {
+				dao.insert(vo);
+			} else {
+				BoardVO vo = dao.searchBoard(Integer.parseInt(request.getParameter("bcode")));
+				vo.setTitle(request.getParameter("bTitle"));
+				vo.setBwrite(request.getParameter("bContent"));
+				dao.update(vo);
+			}
+			response.sendRedirect("board.jsp");
+		} 
+		/**
+		 * 회원정보 수정 컨트롤러
+		 */
+		else if (com.equals("/userUpdate.do")) {
+			request.setCharacterEncoding("utf-8");
+			// userData 객체 생성
+			UserDataVO userData = new UserDataVO();
+			userData.setUserID(request.getParameter("userId"));
+			userData.setUserPassword(request.getParameter("userPw"));
+			userData.setUserName(request.getParameter("userName"));
+			userData.setUserEmail(request.getParameter("userEmail"));
+			userData.setUserPhone(Integer.parseInt(request.getParameter("userPhone")));
+			userData.setEmailReceiveYn(request.getParameter("emailReceiveYn").charAt(0));
+			userData.setSmsReceiveYn(request.getParameter("smsReceiveYn").charAt(0));
+			userData.setAdmin('0');
+			// dataDao 객체 생성, 삽입
+			UserDataDAO udataDao = new UserDataDAO();
+			udataDao.update(userData);
 
-			viewPage = "list.do";
-		} else if (com.equals("/reply_view.do")) {
+			// userAddr 객체 생성
+			if (request.getParameter("userPostcode1") != "") {
+				UserAddrVO userAddr = new UserAddrVO();
+				userAddr.setUserID(request.getParameter("userId"));
+				userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode1")));
+				userAddr.setRoadAddress(request.getParameter("userRoadAddr1"));
+				userAddr.setJibunAddress(request.getParameter("userJibunAddr1"));
+				userAddr.setDetailAddress(request.getParameter("userDetailAddress1"));
+				userAddr.setExtraAddress(request.getParameter("userExtraAddr1"));
+				// addrDao 객체 생성, 삽입
+				UserAddrDAO uaddrDao1 = new UserAddrDAO();
+				uaddrDao1.insert(userAddr);
+			}
+			if (request.getParameter("userPostcode2") != "") {
+				UserAddrVO userAddr = new UserAddrVO();
+				userAddr.setUserID(request.getParameter("userId"));
+				userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode2")));
+				userAddr.setRoadAddress(request.getParameter("userRoadAddr2"));
+				userAddr.setJibunAddress(request.getParameter("userJibunAddr2"));
+				userAddr.setDetailAddress(request.getParameter("userDetailAddress2"));
+				userAddr.setExtraAddress(request.getParameter("userExtraAddr2"));
+				// addrDao 객체 생성, 삽입
+				UserAddrDAO uaddrDao2 = new UserAddrDAO();
+				uaddrDao2.insert(userAddr);
+			}
+			if (request.getParameter("userPostcode3") != "") {
+				UserAddrVO userAddr = new UserAddrVO();
+				userAddr.setUserID(request.getParameter("userId"));
+				userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode3")));
+				userAddr.setRoadAddress(request.getParameter("userRoadAddr3"));
+				userAddr.setJibunAddress(request.getParameter("userJibunAddr3"));
+				userAddr.setDetailAddress(request.getParameter("userDetailAddress3"));
+				userAddr.setExtraAddress(request.getParameter("userExtraAddr3"));
+				// addrDao 객체 생성, 삽입
+				UserAddrDAO uaddrDao3 = new UserAddrDAO();
+				uaddrDao3.insert(userAddr);
+			}
 
-			viewPage = "reply_view.jsp";
-		} else if (com.equals("/reply.do")) {
+
+			response.sendRedirect("index.jsp");
+			
+		}
+		else if (com.equals("/reply.do")) {
 
 			viewPage = "list.do";
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		}
+		else if (com.equals("/reply.do")) {
+
+			viewPage = "list.do";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+			dispatcher.forward(request, response);
+		}
+		else if (com.equals("/reply.do")) {
+
+			viewPage = "list.do";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+			dispatcher.forward(request, response);
+		}
+		else if (com.equals("/reply.do")) {
+
+			viewPage = "list.do";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+			dispatcher.forward(request, response);
+		}
+		
 
 	}
 

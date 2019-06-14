@@ -18,12 +18,11 @@ public class GoodsDAO {
 		}
 	}
 	
-	public List<GoodsVO> listAll(){
+	public List<GoodsVO> getList(){
 		List<GoodsVO> list = null;
 		try {
 			SqlSession session = MySqlSession.getSession();
 			list = session.selectList("Goods.searchAll");
-			System.out.println(list.size());
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

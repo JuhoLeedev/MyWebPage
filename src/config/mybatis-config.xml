@@ -24,6 +24,7 @@
 	<mappers>
 		<mapper resource="config/UserMapper.xml" />
 		<mapper resource="config/GoodsMapper.xml"/>
+		<mapper resource="config/BoardMapper.xml"/>
 	</mappers>
 
 </configuration>

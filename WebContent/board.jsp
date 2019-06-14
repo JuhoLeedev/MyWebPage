@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardVO"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +13,7 @@
 <title>부트시스템</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
+<link rel="stylesheet" href="css/board.css">
 <script src="js/respond.js"></script>
 <style type="text/css">
 a:link {
@@ -23,8 +27,13 @@ a:visited {
 }
 
 a:hover {
-	color: black;
+	color: #2E2E2E;
 	text-decoration: none;
+}
+
+.jumbotron{
+	background-color: #424242;
+	color:white;
 }
 </style>
 
@@ -36,6 +45,10 @@ a:hover {
 		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
+		}
+		int pageNumber = 1;
+		if (request.getParameter("pageNumber") != null) {
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
 	<nav class="navbar navbar-default" id="navbar">
@@ -54,9 +67,7 @@ a:hover {
 			<div class="navbar-collapse collapse" id="main-menu">
 				<div class="btn-group top-btn" role="group">
 					<ul class="nav navbar-nav">
-						<li><a href="goods_pc.jsp">조립PC</a></li>
-						<li><a href="#">부품</a></li>
-						<li><a href="#">PC견적</a></li>
+						<li><a href="goods_pc.jsp">PC상품</a></li>
 						<li><a href="board.jsp">커뮤니티</a></li>
 						<li><a href="#">고객지원</a></li>
 						<%
@@ -95,7 +106,7 @@ a:hover {
 								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="#">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -118,13 +129,13 @@ a:hover {
 		</div>
 	</nav>
 
-<!--점보트론==============  -->
+	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
 			<h1 class="text-center">커뮤니티</h1>
 		</div>
 	</div>
-	
+
 	<div class="container">
 		<table class="table table-striped"
 			style="text-align: center; border: 1px solid #dddddd;">
@@ -143,17 +154,81 @@ a:hover {
 				</tr>
 			</thead>
 			<tbody>
+				<%
+					BoardDAO boardDao = new BoardDAO();
+					int maxPage = boardDao.maxPage();
+					List<BoardVO> boardList = boardDao.getList(pageNumber);
+					for (int i = 0; i < boardList.size(); i++) {
+				%>
 				<tr>
-					<td class="text-center">1</td>
-					<td class="text-left"><a href="#">
-							<div style="width: 100%">안녕하세요</div>
+					<td class="text-center"><%=boardList.get(i).getBcode()%></td>
+					<td class="text-left"><a
+						href="hits.do?bcode=<%=boardList.get(i).getBcode()%>">
+							<div style="width: 100%"><%=boardList.get(i).getTitle()%></div>
 					</a></td>
-					<td class="text-center">홍길동</td>
-					<td class="text-center">2019.06.09 23:12</td>
-					<td class="text-center">10</td>
+					<td class="text-center"><%=boardList.get(i).getUserID()%></td>
+					<td class="text-center"><%=boardList.get(i).getBdate()%></td>
+					<td class="text-center"><%=boardList.get(i).getHits()%></td>
 				</tr>
+				<%
+					}
+				%>
 			</tbody>
 		</table>
+		<input type="button" onclick="writeBtn();"
+			class="btn btn-primary pull-right" value="글쓰기">
+	</div>
+	<div class="container text-center">
+		<ul class="pagination">
+			<% if (pageNumber <= 5){
+					for(int i=1; i<pageNumber; i++){
+			%>
+						<li><a href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%		} %>
+					<li class="active"><a href="#" class="btn btn-success"><%=pageNumber%></a></li>
+			<% 		if(maxPage>9){
+						for (int i = pageNumber + 1; i <= pageNumber + 4; i++) { %>
+							<li><a href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%			}
+			%>
+						<li><a href="board.jsp?pageNumber=<%=pageNumber + 5%>" class="btn btn-success btn-arraw-Right">다음</a></li>
+			<% 
+					} else if(maxPage<=9){
+						for(int i = pageNumber+1; i<=maxPage; i++){ %>
+							<li><a	href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%			}
+					}
+				}
+				else if (pageNumber > 5) {
+			%>
+					<li><a href="board.jsp?pageNumber=<%=pageNumber - 5%>" class="btn btn-success btn-arraw-left">이전</a></li>
+			<%
+					for (int i = pageNumber - 4; i < pageNumber; i++) {
+			%>
+						<li><a href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%
+					}
+			%>
+					<li class="active"><a href="#" class="btn btn-success"><%=pageNumber%></a></li>
+			<%
+					if (pageNumber + 4 < maxPage) {
+						for (int i = pageNumber + 1; i <= pageNumber + 4; i++) {
+			%>
+							<li><a href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%
+						}
+			%>
+						<li><a href="board.jsp?pageNumber=<%=pageNumber + 5%>" class="btn btn-success btn-arraw-Right">다음</a></li>
+			<%
+					} else if (pageNumber + 4 >=maxPage) {
+						for(int i = pageNumber + 1; i <= maxPage; i++) {
+			%>
+							<li><a href="board.jsp?pageNumber=<%=i%>" class="btn btn-success"><%=i%></a></li>
+			<%			}
+					}
+				}
+			%>
+		</ul>
 	</div>
 	<!--푸터
 	=============================  -->
@@ -187,5 +262,15 @@ a:hover {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function writeBtn(){
+			var userID = "<%=userID%>";
+			if (userID == "null") {
+				window.location.href = "login.jsp";
+			} else {
+				window.location.href = "board_write.jsp";
+			}
+		}
+	</script>
 </body>
 </html>

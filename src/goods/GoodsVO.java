@@ -4,7 +4,7 @@ public class GoodsVO {
 	private int code;
 	private String name;
 	private String info;
-	private int price;
+	private String price;
 	private String imageSrc;
 	private String cpu;
 	private String vga;
@@ -32,10 +32,10 @@ public class GoodsVO {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getImageSrc() {
