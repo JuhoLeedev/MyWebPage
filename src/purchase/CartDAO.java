@@ -1,4 +1,4 @@
-package goods;
+package purchase;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 
 import config.MySqlSession;
 
-public class GoodsDAO {
-	public void insert(GoodsVO goods) {
+public class CartDAO {
+	public void insert(CartVO c) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			int result = session.insert("Goods.add", goods);
+			int result = session.insert("purchase.addCart", c);
 			session.commit();
 
 		} catch (Exception e) {
@@ -18,26 +18,24 @@ public class GoodsDAO {
 		}
 	}
 	
-	public List<GoodsVO> getList(){
-		List<GoodsVO> list = null;
+	public List<CartVO> search(String userID) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			list = session.selectList("Goods.searchAll");
+			List<CartVO> list = session.selectList("purchase.searchCart",userID);
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 	
-	public GoodsVO search(int code) {
+	public void remove(int cartcode) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			GoodsVO vo = session.selectOne("Goods.search", code);
-			return vo;
+			session.delete("purchase.deleteBuy", cartcode);
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 }

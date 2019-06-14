@@ -111,7 +111,7 @@ a:hover {
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href="logout.do"> 로그아웃</a></li>
+								href="logout.do">로그아웃</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -142,7 +142,7 @@ a:hover {
 				for (int i = 0; i < goodsList.size(); i++) {
 			%>
 			<div class="col-xs-6 col-sm-6 col-md-3">
-				<a href="#">
+				<a href="goods_detail.jsp?code=<%=goodsList.get(i).getCode() %>">
 					<div class="main_goods_box" style="height: 630px;">
 						<div class="goods_img text-center"
 							style="background-image: url('<%=goodsList.get(i).getImageSrc()%>');"></div>

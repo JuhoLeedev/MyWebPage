@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="true"%>
+<%@page import="goods.GoodsDAO"%>
+<%@page import="goods.GoodsVO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,6 @@
 <title>부트시스템</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
-<link rel="stylesheet" href="css/goods.css">
 <script src="js/respond.js"></script>
 <style type="text/css">
 a:link {
@@ -25,9 +26,14 @@ a:hover {
 	text-decoration: none;
 }
 
-.jumbotron{
+p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.jumbotron {
 	background-color: #424242;
-	color:white;
+	color: white;
 }
 </style>
 </head>
@@ -38,6 +44,22 @@ a:hover {
 		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
+		}
+		int code = 0;
+		if (request.getParameter("code") != null) {
+			code = Integer.parseInt(request.getParameter("code"));
+		}
+		GoodsVO goodsVo = null;
+		if (code != 0) {
+			GoodsDAO goodsDao = new GoodsDAO();
+			goodsVo = goodsDao.search(code);
+		} else {
+	%>
+	<script>
+		alert('이미 삭제되었거나 찾을 수 없는 상품입니다.');
+		window.history.back();
+	</script>
+	<%
 		}
 	%>
 	<nav class="navbar navbar-default" id="navbar">
@@ -56,7 +78,7 @@ a:hover {
 			<div class="navbar-collapse collapse" id="main-menu">
 				<div class="btn-group top-btn" role="group">
 					<ul class="nav navbar-nav">
-					<li><a href="goods_pc.jsp">PC상품</a></li>
+						<li><a href="goods_pc.jsp">PC상품</a></li>
 						<li><a href="board.jsp">커뮤니티</a></li>
 						<li><a href="#">고객지원</a></li>
 						<%
@@ -95,7 +117,8 @@ a:hover {
 								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보
+									수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -124,8 +147,50 @@ a:hover {
 			<p class="text-center"></p>
 		</div>
 	</div>
-	
-	
+
+	<div class="container">
+		<div class="container col-md-7 col-lg-6">
+			<div class="main-img">
+				<img class="img-responsive" src="<%=goodsVo.getImageSrc()%>"
+					style="height: 100%">
+			</div>
+		</div>
+		<div class="container col-md-5 col-lg-6" style="margin-top: 100px;">
+			<div class="order-information">
+				<p></p>
+				<p style="font-size: 35px; margin-top: 10px; margin-bottom: 40px;"><%=goodsVo.getName()%></p>
+				<p style="font-size: 20px;"><%=goodsVo.getInfo()%></p>
+
+				<p style="font-size: 15px; color: gray;"><%=goodsVo.getCpu()%>
+					/
+					<%=goodsVo.getVga()%>
+					/
+					<%=goodsVo.getRam()%>
+					/
+					<%=goodsVo.getSsd()%>
+					/
+					<%=goodsVo.getMotherboard()%>
+					/
+					<%=goodsVo.getPower()%>
+				</p>
+
+				<p class="pull-left" style="font-size: 38px; color: #008bac;">
+					가격 :
+					<%=goodsVo.getPrice()%>
+					원
+				</p>
+
+				<p>
+					<button class="btn btn-block btn-success btn-lg checkout" onclick="buygoods()">바로구매</button>
+				</p>
+
+				<p>
+					<button class="btn btn-block btn-success btn-lg btn-cart"
+						type="button" onclick="cartgoods()">장바구니</button>
+				</p>
+			</div>
+		</div>
+	</div>
 
 
 	<!--푸터
@@ -160,5 +225,35 @@ a:hover {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		var code=<%=code%>;
+		
+		function buygoods(){
+			if(confirm("정말로 구매하시겠습니까?")){
+				window.location.href = "buygoods.do?code="code";
+			}
+		}
+		
+		var xmlHttp = new XMLHttpRequest();
+	
+		function cartgoods(){
+			xmlHttp.open("Post", "./cartgoods.do?code=" + encodeURIComponent(code, true);
+			xmlHttp.onreadystatechange = searchProcess;
+			xmlHttp.send(null);
+			
+		}
+		function searchProcess(){
+			if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				var object = eval('(' + xmlHttp.responseText + ')');
+				var result = object.result;
+				if (result == 1){
+					alert("장바구니에 추가되었습니다.");
+				}
+				else{
+					alert("오류가 발생했습니다. 다시 시도해주세요.");
+				}
+			}
+		}
+	</script>
 </body>
 </html>

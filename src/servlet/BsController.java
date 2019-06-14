@@ -12,6 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import board.BoardDAO;
 import board.BoardVO;
+import goods.GoodsDAO;
+import goods.GoodsVO;
+import purchase.BuyDAO;
+import purchase.BuyVO;
+import purchase.CartDAO;
+import purchase.CartVO;
 import user.UserAddrDAO;
 import user.UserAddrVO;
 import user.UserDataDAO;
@@ -272,11 +278,30 @@ public class BsController extends HttpServlet {
 			response.sendRedirect("index.jsp");
 			
 		}
-		else if (com.equals("/reply.do")) {
+		else if (com.equals("/buygoods.do")) {
+			request.setCharacterEncoding("utf-8");
+			HttpSession session = request.getSession();
+			String userID = (String) session.getAttribute("userID");
+			int code = Integer.parseInt(request.getParameter("code"));
 
-			viewPage = "list.do";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request, response);
+			BuyVO buyVo = new BuyVO();
+			buyVo.setPcode(code);
+			buyVo.setUserID(userID);
+			BuyDAO buyDao = new BuyDAO();
+			buyDao.insert(buyVo);
+		}
+		
+		else if (com.equals("/cartgoods.do")) {
+			request.setCharacterEncoding("utf-8");
+			HttpSession session = request.getSession();
+			String userID = (String) session.getAttribute("userID");
+			int code = Integer.parseInt(request.getParameter("code"));
+
+			CartVO cartVo = new CartVO();
+			cartVo.setPcode(code);
+			cartVo.setUserID(userID);
+			CartDAO cartDao = new CartDAO();
+			cartDao.insert(cartVo);
 		}
 		else if (com.equals("/reply.do")) {
 
