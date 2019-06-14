@@ -262,7 +262,6 @@ CREATE TABLE IF NOT EXISTS `user_data` (
 -- 테이블 데이터 bootsystemdb.user_data:~3 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `user_data` DISABLE KEYS */;
 INSERT INTO `user_data` (`userID`, `userPassword`, `userName`, `userEmail`, `userPhone`, `emailReceiveYn`, `smsReceiveYn`, `admin`) VALUES
-	('aa', '111', '에이에이', 'aa@aa.aa', 1234, 'Y', 'Y', '0'),
 	('admin', 'admin123', '관리자', 'admin@gmail.com', 1012341234, 'Y', 'Y', '1'),
 	('test', '1234', '테스트', 'test@test.ts', 1234, 'Y', 'Y', '0');
 /*!40000 ALTER TABLE `user_data` ENABLE KEYS */;

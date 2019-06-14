@@ -73,4 +73,14 @@ public class UserDataDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void remove(String userID) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			session.update("User.deleteData",userID);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

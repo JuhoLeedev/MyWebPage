@@ -20,15 +20,25 @@ public class UserAddrDAO {
 		}
 	}
 	
-	public List<UserAddrVO> getList(){
+	public List<UserAddrVO> getList(String userID){
 		List<UserAddrVO> list = null;
 		try {
 			SqlSession session = MySqlSession.getSession();
-			list = session.selectList("User.searchAll");
+			list = session.selectList("User.searchAll",userID);
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public void removeAll(String userID) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			session.update("User.deleteAddr",userID);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

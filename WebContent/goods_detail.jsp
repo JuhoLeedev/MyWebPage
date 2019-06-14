@@ -181,12 +181,13 @@ p {
 				</p>
 
 				<p>
-					<button class="btn btn-block btn-success btn-lg checkout" onclick="buygoods()">바로구매</button>
+					<button class="btn btn-block btn-success btn-lg checkout"
+						onclick="buyGoods()">바로구매</button>
 				</p>
 
 				<p>
 					<button class="btn btn-block btn-success btn-lg btn-cart"
-						type="button" onclick="cartgoods()">장바구니</button>
+						type="button" onclick="cartGoods()">장바구니</button>
 				</p>
 			</div>
 		</div>
@@ -227,20 +228,28 @@ p {
 	<script src="js/bootstrap.min.js"></script>
 	<script>
 		var code=<%=code%>;
+		var userID =<%=userID%>;
 		
-		function buygoods(){
-			if(confirm("정말로 구매하시겠습니까?")){
-				window.location.href = "buygoods.do?code="code";
+		function buyGoods(){
+			if(userID == null){
+				window.location.href = "login.jsp";
+			}
+			else if(confirm("정말로 구매하시겠습니까?")){
+				window.location.href = "buygoods.do?code="+code;
 			}
 		}
 		
 		var xmlHttp = new XMLHttpRequest();
 	
-		function cartgoods(){
-			xmlHttp.open("Post", "./cartgoods.do?code=" + encodeURIComponent(code, true);
+		function cartGoods(){
+			if(userID == null){
+				window.location.href = "login.jsp";
+			}
+			else {
+			xmlHttp.open("Post", "./cartgoods.do?code=" + encodeURIComponent("code", true);
 			xmlHttp.onreadystatechange = searchProcess;
 			xmlHttp.send(null);
-			
+			}
 		}
 		function searchProcess(){
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {

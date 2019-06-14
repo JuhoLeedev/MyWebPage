@@ -303,11 +303,18 @@ public class BsController extends HttpServlet {
 			CartDAO cartDao = new CartDAO();
 			cartDao.insert(cartVo);
 		}
-		else if (com.equals("/reply.do")) {
-
-			viewPage = "list.do";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request, response);
+		/**
+		 * 회원탈퇴
+		 */
+		else if (com.equals("/userOut.do")) {
+			request.setCharacterEncoding("utf-8");
+			String userID = request.getParameter("userID");
+			UserDataDAO dataDao = new UserDataDAO();
+			dataDao.remove(userID);
+			UserAddrDAO addrDao = new UserAddrDAO();
+			addrDao.removeAll(userID);
+			
+			response.sendRedirect("userOut.jsp");
 		}
 		else if (com.equals("/reply.do")) {
 

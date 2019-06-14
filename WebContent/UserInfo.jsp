@@ -223,7 +223,7 @@ h1 {
 					<button type="submit" class="btn btn-primary">변경 완료</button>
 				</div>
 				<div class="col-lg-1">
-					<a href="index.jsp" onclick="return cancelchk();"></a><button type="button" class="btn btn-default">취소</button></a>
+					<a href="userOut.do?userID=<%=userID %>" onclick="return cancelchk();"><button type="button" class="btn btn-danger">회원 탈퇴</button></a>
 				</div>
 			</div>
 		</form>
@@ -637,7 +637,7 @@ h1 {
 			
 
 			function cancelchk(){
-				return confirm("정말로 취소하시겠습니까?");
+				return confirm("정말로 탈퇴하시겠습니까?");
 			}
 		</script>
 

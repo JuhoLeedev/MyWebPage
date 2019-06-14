@@ -73,4 +73,19 @@
 		]]>
 	</update>
 
+	<delete id="deleteData" parameterType="String">
+		<![CDATA[
+			DELETE
+			  FROM user_data
+			 WHERE userID = #{userID}
+		]]>
+	</delete>
+	
+	<delete id="deleteAddr" parameterType="String">
+		<![CDATA[
+			DELETE
+			  FROM user_Addr
+			 WHERE userID = #{userID}
+		]]>
+	</delete>
 </mapper>
