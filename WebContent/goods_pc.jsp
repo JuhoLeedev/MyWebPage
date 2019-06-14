@@ -106,8 +106,8 @@
 	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
-			<h1 class="text-center">PC 목록</h1>
-			<p class="text-center">ㅇㅇㅇ</p>
+			<h1 class="text-center">PC 상품</h1>
+			<p class="text-center">뭔가 설명란</p>
 		</div>
 	</div>
 

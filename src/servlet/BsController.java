@@ -104,7 +104,7 @@ public class BsController extends HttpServlet {
 			udataDao.insert(userData);
 			
 			// userAddr 객체 생성
-			if(request.getParameter("userPostcode") != null) {
+			if(request.getParameter("userPostcode") != "") {
 			UserAddrVO userAddr = new UserAddrVO();
 			userAddr.setUserID(request.getParameter("userId"));
 			userAddr.setPostcode(Integer.parseInt(request.getParameter("userPostcode")));
