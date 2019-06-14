@@ -1,6 +1,13 @@
 @charset "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
 .GoodsList{
 	background-color: white;
 	padding-bottom: 40px;
@@ -26,7 +33,7 @@ div.main_goods_box{
 
 .goods_img{
 	width: 100%;
-	height: 200px;
+	height: 250px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-size: 100% auto;

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true"%>
-<%@page import="goods.GoodsDAO"%>
-<%@page import="goods.GoodsVO"%>
+	pageEncoding="UTF-8"%>
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardVO"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -13,26 +13,30 @@
 <title>부트시스템</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
-<link rel="stylesheet" href="css/goods.css">
+<link rel="stylesheet" href="css/board.css">
 <script src="js/respond.js"></script>
 <style type="text/css">
 a:link {
+	color: black;
 	text-decoration: none;
 }
 
 a:visited {
+	color: black;
 	text-decoration: none;
 }
 
 a:hover {
+	color: black;
 	text-decoration: none;
-}
-
+}	
 .jumbotron{
 	background-color: #424242;
 	color:white;
 }
+
 </style>
+
 </head>
 <body>
 	<%
@@ -41,6 +45,22 @@ a:hover {
 		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
+		}
+		int bcode = 0;
+		if (request.getParameter("bcode") != null) {
+			bcode = Integer.parseInt(request.getParameter("bcode"));
+		}
+		BoardVO boardVo = null;
+		if (bcode != 0) {
+			BoardDAO boardDao = new BoardDAO();
+			boardVo = boardDao.searchBoard(bcode);
+		} else {
+	%>
+	<script>
+		alert('이미 삭제되었거나 찾을 수 없는 게시글입니다.');
+		window.history.back();
+	</script>
+	<%
 		}
 	%>
 	<nav class="navbar navbar-default" id="navbar">
@@ -111,7 +131,7 @@ a:hover {
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href="logout.do">로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -124,55 +144,56 @@ a:hover {
 	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
-			<h1 class="text-center">PC 상품</h1>
-<<<<<<< HEAD
-			<p class="text-center">뭔가 설명란</p>
-=======
-			<p class="text-center">상품을 클릭하면 보다 자세한 사양을 볼 수 있습니다.</p>
->>>>>>> branch 'master' of https://github.com/JuhoLeedev/MyWebPage.git
+			<h1 class="text-center">커뮤니티</h1>
 		</div>
 	</div>
 
-	<div class="container-fluid GoodsList">
-		<div class="container list">
-			<div class="page-header">
-				<div class="MenuTitle">
-					<span>Goods List</span>
-				</div>
-			</div>
-			<%
-				GoodsDAO goodsDao = new GoodsDAO();
-				List<GoodsVO> goodsList = goodsDao.getList();
-				for (int i = 0; i < goodsList.size(); i++) {
-			%>
-			<div class="col-xs-6 col-sm-6 col-md-3">
-				<a href="goods_detail.jsp?code=<%=goodsList.get(i).getCode() %>">
-					<div class="main_goods_box" style="height: 630px;">
-						<div class="goods_img text-center"
-							style="background-image: url('<%=goodsList.get(i).getImageSrc()%>');"></div>
-						<div class="goods_footer text-center">
-							<div class="text-center">
-								<ul class="list-unstyled">
-									<li><text class="goods_name"><%=goodsList.get(i).getName()%></text></li>
-									<li><text class="goods_info"><%=goodsList.get(i).getInfo()%></text></li>
-								</ul>
-							</div>
-							<div class="text-center">
-								<p>
-									<text class="goods_pay">판매가: <%=goodsList.get(i).getPrice()%>원</text>
-								</p>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<%
-				}
-			%>
-
+	<div class="container-fluid ViewArea">
+		<div class="container Title">
+			<blockquote id="board_view_title">
+				<p>
+					<strong> <text class="board_title_text"><%=boardVo.getTitle()%></text>
+					</strong>
+				</p>
+				<p>
+					<text style="font-size:13px;">작성자: <%=boardVo.getUserID()%>
+					| 등록일: <%=boardVo.getBdate()%> | 조회수: <%=boardVo.getHits()%></text>
+				</p>
+			</blockquote>
 		</div>
+		<div class="container body DiscripTionArea">
+			<p><%=boardVo.getBwrite()%></p>
+		</div>
+		<%
+			if (userID != null) {
+				if (userID.equals(boardVo.getUserID())) {
+		%>
+		<div class="container text-right">
+			<p>
+				<a href="board_write.jsp?bcode=<%=boardVo.getBcode()%>"><button
+						type="button" class="btn btn-primary">수정하기</button></a> <a
+					href="deleteBoard.do?bcode=<%=boardVo.getBcode()%>"
+					onclick="
+					return delchk();"><button type="button"
+						class="btn btn-danger">삭제</button></a>
+			</p>
+		</div>
+		<%
+			} else if (admin == 1) {
+		%>
+		<div class="container text-right">
+			<p>
+				<a href="deleteBoard.do?bcode=<%=boardVo.getBcode()%>"
+					onclick="
+					return delchk();"><button type="button"
+						class="btn btn-danger">삭제</button></a>
+			</p>
+		</div>
+		<%
+			}
+			}
+		%>
 	</div>
-
 	<!--푸터
 	=============================  -->
 	<footer style="background-color: white; color: #bbbbbb">
@@ -205,5 +226,10 @@ a:hover {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function delchk() {
+			return confirm("정말로 삭제하시겠습니까?");
+		}
+	</script>
 </body>
 </html>

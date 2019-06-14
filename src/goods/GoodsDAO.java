@@ -1,30 +1,28 @@
-package user;
+package goods;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import config.MySqlSession;
-import goods.GoodsVO;
 
-public class UserAddrDAO {
-	public void insert(UserAddrVO user) {
+public class GoodsDAO {
+	public void insert(GoodsVO goods) {
 		try {
-			
 			SqlSession session = MySqlSession.getSession();
-			int result = session.insert("User.addAddr", user);
-			
+			int result = session.insert("Goods.add", goods);
 			session.commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public List<UserAddrVO> getList(String userID){
-		List<UserAddrVO> list = null;
+	public List<GoodsVO> getList(){
+		List<GoodsVO> list = null;
 		try {
 			SqlSession session = MySqlSession.getSession();
-			list = session.selectList("User.searchAll",userID);
+			list = session.selectList("Goods.searchAll");
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,13 +30,14 @@ public class UserAddrDAO {
 		return list;
 	}
 	
-	public void removeAll(String userID) {
+	public GoodsVO search(int code) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			session.update("User.deleteAddr",userID);
-			session.commit();
+			GoodsVO vo = session.selectOne("Goods.search", code);
+			return vo;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 }

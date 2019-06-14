@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" session="true"%>
 <%@page import="goods.GoodsDAO"%>
 <%@page import="goods.GoodsVO"%>
-<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +12,6 @@
 <title>부트시스템</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
-<link rel="stylesheet" href="css/goods.css">
 <script src="js/respond.js"></script>
 <style type="text/css">
 a:link {
@@ -28,9 +26,14 @@ a:hover {
 	text-decoration: none;
 }
 
-.jumbotron{
+p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.jumbotron {
 	background-color: #424242;
-	color:white;
+	color: white;
 }
 </style>
 </head>
@@ -41,6 +44,22 @@ a:hover {
 		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
+		}
+		int code = 0;
+		if (request.getParameter("code") != null) {
+			code = Integer.parseInt(request.getParameter("code"));
+		}
+		GoodsVO goodsVo = null;
+		if (code != 0) {
+			GoodsDAO goodsDao = new GoodsDAO();
+			goodsVo = goodsDao.search(code);
+		} else {
+	%>
+	<script>
+		alert('이미 삭제되었거나 찾을 수 없는 상품입니다.');
+		window.history.back();
+	</script>
+	<%
 		}
 	%>
 	<nav class="navbar navbar-default" id="navbar">
@@ -98,7 +117,8 @@ a:hover {
 								href="logout.do"> 로그아웃</a></li>
 							<li style="text-align: center;"><a href="#">내 장바구니</a></li>
 							<li style="text-align: center;"><a href="#">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보
+									수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -111,7 +131,7 @@ a:hover {
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
-								href="logout.do">로그아웃</a></li>
+								href="logout.do"> 로그아웃</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -120,58 +140,59 @@ a:hover {
 			</div>
 		</div>
 	</nav>
-
 	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
 			<h1 class="text-center">PC 상품</h1>
-<<<<<<< HEAD
-			<p class="text-center">뭔가 설명란</p>
-=======
-			<p class="text-center">상품을 클릭하면 보다 자세한 사양을 볼 수 있습니다.</p>
->>>>>>> branch 'master' of https://github.com/JuhoLeedev/MyWebPage.git
+			<p class="text-center"></p>
 		</div>
 	</div>
 
-	<div class="container-fluid GoodsList">
-		<div class="container list">
-			<div class="page-header">
-				<div class="MenuTitle">
-					<span>Goods List</span>
-				</div>
+	<div class="container">
+		<div class="container col-md-7 col-lg-6">
+			<div class="main-img">
+				<img class="img-responsive" src="<%=goodsVo.getImageSrc()%>"
+					style="height: 100%">
 			</div>
-			<%
-				GoodsDAO goodsDao = new GoodsDAO();
-				List<GoodsVO> goodsList = goodsDao.getList();
-				for (int i = 0; i < goodsList.size(); i++) {
-			%>
-			<div class="col-xs-6 col-sm-6 col-md-3">
-				<a href="goods_detail.jsp?code=<%=goodsList.get(i).getCode() %>">
-					<div class="main_goods_box" style="height: 630px;">
-						<div class="goods_img text-center"
-							style="background-image: url('<%=goodsList.get(i).getImageSrc()%>');"></div>
-						<div class="goods_footer text-center">
-							<div class="text-center">
-								<ul class="list-unstyled">
-									<li><text class="goods_name"><%=goodsList.get(i).getName()%></text></li>
-									<li><text class="goods_info"><%=goodsList.get(i).getInfo()%></text></li>
-								</ul>
-							</div>
-							<div class="text-center">
-								<p>
-									<text class="goods_pay">판매가: <%=goodsList.get(i).getPrice()%>원</text>
-								</p>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<%
-				}
-			%>
+		</div>
+		<div class="container col-md-5 col-lg-6" style="margin-top: 100px;">
+			<div class="order-information">
+				<p></p>
+				<p style="font-size: 35px; margin-top: 10px; margin-bottom: 40px;"><%=goodsVo.getName()%></p>
+				<p style="font-size: 20px;"><%=goodsVo.getInfo()%></p>
 
+				<p style="font-size: 15px; color: gray;"><%=goodsVo.getCpu()%>
+					/
+					<%=goodsVo.getVga()%>
+					/
+					<%=goodsVo.getRam()%>
+					/
+					<%=goodsVo.getSsd()%>
+					/
+					<%=goodsVo.getMotherboard()%>
+					/
+					<%=goodsVo.getPower()%>
+				</p>
+
+				<p class="pull-left" style="font-size: 38px; color: #008bac;">
+					가격 :
+					<%=goodsVo.getPrice()%>
+					원
+				</p>
+
+				<p>
+					<button class="btn btn-block btn-success btn-lg checkout"
+						onclick="buyGoods()">바로구매</button>
+				</p>
+
+				<p>
+					<button class="btn btn-block btn-success btn-lg btn-cart"
+						type="button" onclick="cartGoods()">장바구니</button>
+				</p>
+			</div>
 		</div>
 	</div>
+
 
 	<!--푸터
 	=============================  -->
@@ -205,5 +226,43 @@ a:hover {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		var code=<%=code%>;
+		var userID =<%=userID%>;
+		
+		function buyGoods(){
+			if(userID == null){
+				window.location.href = "login.jsp";
+			}
+			else if(confirm("정말로 구매하시겠습니까?")){
+				window.location.href = "buygoods.do?code="+code;
+			}
+		}
+		
+		var xmlHttp = new XMLHttpRequest();
+	
+		function cartGoods(){
+			if(userID == null){
+				window.location.href = "login.jsp";
+			}
+			else {
+			xmlHttp.open("Post", "./cartgoods.do?code=" + encodeURIComponent("code", true);
+			xmlHttp.onreadystatechange = searchProcess;
+			xmlHttp.send(null);
+			}
+		}
+		function searchProcess(){
+			if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				var object = eval('(' + xmlHttp.responseText + ')');
+				var result = object.result;
+				if (result == 1){
+					alert("장바구니에 추가되었습니다.");
+				}
+				else{
+					alert("오류가 발생했습니다. 다시 시도해주세요.");
+				}
+			}
+		}
+	</script>
 </body>
 </html>

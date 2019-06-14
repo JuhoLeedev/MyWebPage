@@ -47,8 +47,38 @@ public class UserDataDAO {
 		try {
 			SqlSession session = MySqlSession.getSession();
 			int result = session.insert("User.addData", user);
+			session.commit();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public UserDataVO search(String userID) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			UserDataVO vo = session.selectOne("User.searchData",userID);
+			return vo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; // 데이터베이스 오류
+	}
+	
+	public void update(UserDataVO vo) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			session.update("User.dataUpdate",vo);
 			session.commit();
-			//session.close();	//	세션닫기	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(String userID) {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			session.update("User.deleteData",userID);
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
