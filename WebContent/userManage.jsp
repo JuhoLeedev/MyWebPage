@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true"%>
-
+	pageEncoding="UTF-8"%>
+<%@page import="user.UserDataDAO"%>
+<%@page import="user.UserDataVO"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,18 +10,33 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"/ -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>부트시스템</title>
+<title>부트시스템 회원관리</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootSystem.css">
+<link rel="stylesheet" href="css/board.css">
 <script src="js/respond.js"></script>
-<style>
+<style type="text/css">
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #2E2E2E;
+	text-decoration: none;
+}
+
 .jumbotron {
-	text-shadow: black 0.2em 0.2em 0.2em;
+	background-color: #424242;
 	color: white;
-	background-image: url('images/jumbotronBackground.jpg');
-	background-size: cover;
 }
 </style>
+
 </head>
 <body>
 	<%
@@ -28,6 +45,10 @@
 		if (session.getAttribute("userID") != null && session.getAttribute("admin") != null) {
 			userID = (String) session.getAttribute("userID");
 			admin = (Integer) session.getAttribute("admin");
+		}
+		int pageNumber = 1;
+		if (request.getParameter("pageNumber") != null) {
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
 	<nav class="navbar navbar-default" id="navbar">
@@ -83,9 +104,12 @@
 						<ul class="dropdown-menu">
 							<li style="text-align: center; cursor: pointer;"><a
 								href="logout.do"> 로그아웃</a></li>
-							<li style="text-align: center;"><a href="myCart.jsp">내 장바구니</a></li>
-							<li style="text-align: center;"><a href="myPurchase.jsp">내 구매 목록</a></li>
-							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보 수정</a></li>
+							<li style="text-align: center;"><a href="myCart.jsp">내
+									장바구니</a></li>
+							<li style="text-align: center;"><a href="myPurchase.jsp">내
+									구매 목록</a></li>
+							<li style="text-align: center;"><a href="UserInfo.jsp">회원정보
+									수정</a></li>
 						</ul></li>
 				</ul>
 				<%
@@ -107,52 +131,54 @@
 			</div>
 		</div>
 	</nav>
-	<!-- Carousel
-    ================================================== -->
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		<!-- Indicators -->
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="1"></li>
-			<li data-target="#myCarousel" data-slide-to="2"></li>
-		</ol>
-		<div class="carousel-inner" role="listbox">
-			<div class="item active">
-				<img class="first-slide"
-					src="https://tistory1.daumcdn.net/tistory/2933724/skin/images/hover01.jpg"
-					alt="First slide">
-			</div>
-			<div class="item">
-				<img class="second-slide"
-					src="https://tistory1.daumcdn.net/tistory/2933724/skin/images/hover02.jpg"
-					alt="Second slide">
-			</div>
-			<div class="item">
-				<img class="third-slide"
-					src="https://tistory1.daumcdn.net/tistory/2933724/skin/images/hover03.jpg"
-					alt="Third slide">
-			</div>
-		</div>
-		<a class="left carousel-control" href="#myCarousel" role="button"
-			data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"
-			aria-hidden="true"></span> <span class="sr-only">Previous</span>
-		</a> <a class="right carousel-control" href="#myCarousel" role="button"
-			data-slide="next"> <span
-			class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
-	<!-- /.carousel -->
 
+	<!--점보트론==============  -->
 	<div class="container-fluid">
 		<div class="jumbotron">
-			<h1 class="text-center">Boot System에서 여러분만의 시스템을 맞춰보세요!</h1>
-			<p class="text-center">부트시스템은 용도에 맞게 다양한 사양의 제품들을 판매하고 있습니다.</p>
-			<p class="text-center">
-				<a class="btn btn-primary btn-lg" href="goods_pc.jsp" role="button">상품 보러
-					가기</a>
-			</p>
+			<h1 class="text-center">회원관리</h1>
 		</div>
+	</div>
+
+	<div class="container">
+		<table class="table table-striped"
+			style="text-align: center; border: 1px solid #dddddd;">
+			<thead>
+				<tr>
+					<th class="col-sm-2 col-md-2 text-center"
+						style="background-color: #eeeeee;">ID</th>
+					<th class="col-sm-2 col-md-2 text-center"
+						style="background-color: #eeeeee;">이름</th>
+					<th class="col-sm-4 col-md-4 text-center"
+						style="background-color: #eeeeee;">메일</th>
+					<th class="col-sm-3 col-md-3 text-center"
+						style="background-color: #eeeeee;">전화번호</th>
+					<th class="col-sm-1 col-md-1 text-center"
+						style="background-color: #eeeeee;">유저삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+					UserDataDAO userDao = new UserDataDAO();
+					List<UserDataVO> userList = userDao.searchDataAll();
+					for (int i = 0; i < userList.size(); i++) {
+				%>
+				<tr>
+					<td class="text-center"><%=userList.get(i).getUserID()%></td>
+					<td class="text-left">
+						<div style="width: 100%"><%=userList.get(i).getUserName()%></div>
+					</td>
+					<td class="text-center"><%=userList.get(i).getUserEmail()%></td>
+					<td class="text-center"><%=userList.get(i).getUserPhone()%></td>
+					<td class="text-center"><a
+						href="userDataDelete.do?userID=<%=userList.get(i).getUserID()%>"
+						onclick="return userDeleteChk()"><button
+								class="btn btn-danger btn-sm">삭제하기</button></a></td>
+				</tr>
+				<%
+					}
+				%>
+			</tbody>
+		</table>
 	</div>
 
 	<!--푸터
@@ -187,5 +213,10 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function userDeleteChk(){
+			return confirm("정말로 이 유저 정보를 삭제하시겠습니까?");
+		}
+	</script>
 </body>
 </html>

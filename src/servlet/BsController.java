@@ -360,6 +360,18 @@ public class BsController extends HttpServlet {
 
 			response.sendRedirect("myCart.jsp");
 		}
+		/**
+		 * 유저 삭제하기
+		 */
+		else if (com.equals("/userDataDelete.do")) {
+			request.setCharacterEncoding("utf-8");
+			String userID = request.getParameter("userID");
+			UserDataDAO userDao = new UserDataDAO();
+			userDao.remove(userID);
+			
+
+			response.sendRedirect("myCart.jsp");
+		}
 
 	}
 

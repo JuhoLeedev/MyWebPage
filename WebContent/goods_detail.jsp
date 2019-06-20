@@ -87,7 +87,7 @@ p {
 							if (admin == 1) {
 						%>
 						<li><a href="#">배송관리</a></li>
-						<li><a href="#">회원관리</a></li>
+						<li><a href="userManage.jsp">회원관리</a></li>
 						<%
 							}
 						%>

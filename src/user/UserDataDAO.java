@@ -1,6 +1,9 @@
 package user;
 
 import config.MySqlSession;
+import purchase.BuyVO;
+
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -64,6 +67,17 @@ public class UserDataDAO {
 		return null; // 데이터베이스 오류
 	}
 	
+	public List<UserDataVO> searchDataAll() {
+		try {
+			SqlSession session = MySqlSession.getSession();
+			List<UserDataVO> list = session.selectList("User.searchDataAll");
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void update(UserDataVO vo) {
 		try {
 			SqlSession session = MySqlSession.getSession();
@@ -77,7 +91,7 @@ public class UserDataDAO {
 	public void remove(String userID) {
 		try {
 			SqlSession session = MySqlSession.getSession();
-			session.update("User.deleteData",userID);
+			session.delete("User.deleteData",userID);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
